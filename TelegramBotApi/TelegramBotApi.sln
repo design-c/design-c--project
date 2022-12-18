@@ -10,6 +10,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dal", "Dal\Dal.csproj", "{4
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic", "Logic\Logic.csproj", "{2994DAE0-D1EF-450A-9D76-EC5D2B4A4565}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TelegramBotApi.Tests", "TelegramBotApi.Tests", "{2F8324A3-B5A1-476A-9F50-E1DBCEF7D0DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelegramBotApi.Tests", "TelegramBotApi.Tests\TelegramBotApi.Tests.csproj", "{72D124B9-4E9D-4EC4-BACD-F1259F103103}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,9 +32,14 @@ Global
 		{2994DAE0-D1EF-450A-9D76-EC5D2B4A4565}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2994DAE0-D1EF-450A-9D76-EC5D2B4A4565}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2994DAE0-D1EF-450A-9D76-EC5D2B4A4565}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72D124B9-4E9D-4EC4-BACD-F1259F103103}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72D124B9-4E9D-4EC4-BACD-F1259F103103}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72D124B9-4E9D-4EC4-BACD-F1259F103103}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72D124B9-4E9D-4EC4-BACD-F1259F103103}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{403CE003-A8A6-4111-9BCC-2AA0421678B9} = {B16D2190-D01F-43D1-9EB2-1EFAC8C25A78}
 		{2994DAE0-D1EF-450A-9D76-EC5D2B4A4565} = {8BA09D31-FBDE-4DBC-AE5C-86FB191EC6D4}
+		{72D124B9-4E9D-4EC4-BACD-F1259F103103} = {2F8324A3-B5A1-476A-9F50-E1DBCEF7D0DC}
 	EndGlobalSection
 EndGlobal
