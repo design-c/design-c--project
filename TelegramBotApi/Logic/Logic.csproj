@@ -23,7 +23,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="AngleSharp" Version="0.17.1" />
       <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="6.0.12" />
+      <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
       <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.10.0" />
     </ItemGroup>
 

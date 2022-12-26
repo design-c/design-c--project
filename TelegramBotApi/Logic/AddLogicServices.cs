@@ -1,4 +1,5 @@
-﻿using Logic.Services;
+﻿using AngleSharp.Html.Parser;
+using Logic.Services;
 using Logic.Services.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -11,7 +12,10 @@ public static class ForStartup
     {
         services
             .AddTransient<IAuthService, AuthService>()
-            .TryAddScoped<HttpClient>();
+            .AddTransient<IUserUrfuService, UserUrfuService>();
+
+        services.TryAddScoped<HttpClient>();
+        services.TryAddScoped<HtmlParser>();
 
         return services;
     }
