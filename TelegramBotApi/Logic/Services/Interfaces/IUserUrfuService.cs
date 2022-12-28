@@ -2,7 +2,7 @@
 
 public interface IUserUrfuService
 {
-    Task GetUserInfo();
-    
-    Task GetUserSchedule();
+    Task<object> GetUserInfo();
+
+    Task<object> GetUserSchedule();
 }
