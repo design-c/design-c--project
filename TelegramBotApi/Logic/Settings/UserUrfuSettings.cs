@@ -1,4 +1,6 @@
-﻿namespace Logic.Settings;
+﻿using Logic.Services.Interfaces;
+
+namespace Logic.Settings;
 
 public class UserUrfuSettings
 {

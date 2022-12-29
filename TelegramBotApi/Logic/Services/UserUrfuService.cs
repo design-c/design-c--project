@@ -9,16 +9,19 @@ public class UserUrfuService : IUserUrfuService
 {
     private readonly HttpClient httpClient;
     private readonly IUrfuHtmlParserService urfuHtmlParserService;
+    private readonly IUrfuUtilsService urfuUtilsService;
     private readonly UserUrfuSettings userUrfuSettings;
 
     public UserUrfuService(
         HttpClient httpClient,
         IUrfuHtmlParserService urfuHtmlParserService,
+        IUrfuUtilsService urfuUtilsService,
         IOptions<UserUrfuSettings> userUrfuSettings
     )
     {
         this.httpClient = httpClient;
         this.urfuHtmlParserService = urfuHtmlParserService;
+        this.urfuUtilsService = urfuUtilsService;
         this.userUrfuSettings = userUrfuSettings.Value;
     }
 
@@ -32,7 +35,11 @@ public class UserUrfuService : IUserUrfuService
 
     public async Task<object> GetUserSchedule()
     {
-        var userScheduleHtmlString = await GetHtmlStringByUri(userUrfuSettings.UserScheduleUri);
+        var request = $"{userUrfuSettings.UserInfoUri}?access-token=RksktTJ2yVftQYzY&callback=jQuery21409072821796403554_1672251015990"
+            .GenerateHttpRequestMessage(HttpMethod.Get);
+        var httpResponseMessage = await httpClient.SendAsync(request).ConfigureAwait(false);
+        httpResponseMessage.EnsureSuccessStatusCode();
+        var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
 
         return null;
     }

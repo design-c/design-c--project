@@ -7,7 +7,7 @@ namespace Api.Controllers.Urfu;
 
 [ApiController]
 [Route("/urfu")]
-[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+// [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class UrfuUserController : ControllerBase
 {
     private readonly IUserUrfuService userUrfuService;

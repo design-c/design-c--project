@@ -13,7 +13,8 @@ public static class ForStartup
         services
             .AddTransient<IAuthService, AuthService>()
             .AddTransient<IUserUrfuService, UserUrfuService>()
-            .AddTransient<IUrfuHtmlParserService, UrfuHtmlParserService>();
+            .AddTransient<IUrfuHtmlParserService, UrfuHtmlParserService>()
+            .AddTransient<IUrfuUtilsService, UrfuUtilsService>();
 
         services.TryAddScoped<HttpClient>();
         services.TryAddScoped<HtmlParser>();

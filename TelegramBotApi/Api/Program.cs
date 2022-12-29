@@ -51,6 +51,7 @@ builder.Services.AddAuthorization();
 builder.Services.Configure<AuthUrfuSettings>(builder.Configuration.GetSection(AuthUrfuSettings.UrfuAuth));
 builder.Services.Configure<AuthJwtSettings>(builder.Configuration.GetSection(AuthJwtSettings.JwtAuth));
 builder.Services.Configure<UserUrfuSettings>(builder.Configuration.GetSection(UserUrfuSettings.UserUrfu));
+
 builder.Services.AddLogicServices();
 
 var app = builder.Build();
