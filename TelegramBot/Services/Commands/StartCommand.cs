@@ -13,8 +13,8 @@ public class StartCommand : ICommand
 
     public async Task Execute(TelegramBotClient client, Message message)
     {
-        await client.SetMyCommandsAsync(MenuCommands.StartCommands);
         await client.SendTextMessageAsync(message.Chat.Id,
-            $"Здравствуйте, {message.Chat.Username}!\nДля начала работы авторизируйтесь с помощью команды /login", replyMarkup: InlineKeyboards.StartKeyboard);
+            $"Здравствуйте, {message.Chat.Username}!\nДля начала работы авторизируйтесь с помощью команды /login", 
+                replyMarkup: InlineKeyboards.StartKeyboard);
     }
 }

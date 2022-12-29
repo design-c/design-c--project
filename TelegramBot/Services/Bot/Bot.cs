@@ -50,7 +50,6 @@ public class Bot
                 var token = "AdajnfuasfmAUIfaufm3244";
 
                 users.TryAdd(msg.Chat.Id, token);
-                await Client.SetMyCommandsAsync(MenuCommands.FinalCommands);
                 await Client.SendTextMessageAsync(msg.Chat.Id, "Авторизация произошла успешно!\nМеню:",
                     replyMarkup: InlineKeyboards.FinalKeyboard);
                 

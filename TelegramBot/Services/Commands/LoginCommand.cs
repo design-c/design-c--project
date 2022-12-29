@@ -14,9 +14,7 @@ public class LoginCommand : ICommand
     public async Task Execute(TelegramBotClient client, Message message)
     {
         Console.WriteLine($"Авторизировался {message.Chat.Username}");
-
-        await client.SetMyCommandsAsync(MenuCommands.StartCommands);
-        await client.SendTextMessageAsync(message.Chat.Id, "Введите логин и пароль от личного кабинета УрФУ" +
+        await client.SendTextMessageAsync(message.Chat.Id, "Введите логин и пароль от личного кабинета УрФУ, " +
                                                            "начав сообщение с \":\":");
     }
 }
