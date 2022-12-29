@@ -4,5 +4,5 @@ namespace Logic.Services.Interfaces;
 
 public interface IAuthService
 {
-    Task<JwtSecurityToken> Login(string login, string password);
+    Task<JwtSecurityToken> Login(string userKey, string login, string password);
 }

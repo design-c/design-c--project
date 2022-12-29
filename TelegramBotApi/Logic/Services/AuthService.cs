@@ -27,7 +27,7 @@ public class AuthService : IAuthService
         client = httpClient;
     }
 
-    public async Task<JwtSecurityToken> Login(string login, string password)
+    public async Task<JwtSecurityToken> Login(string userKey, string login, string password)
     {
         var isPasswordAndLoginCorrect = await IsPasswordAndLoginCorrect(login, password);
 

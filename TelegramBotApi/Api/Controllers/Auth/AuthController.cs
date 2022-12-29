@@ -10,7 +10,7 @@ namespace Api.controllers;
 
 [ApiController]
 [Route("/auth")]
-public class AuthController : ControllerBase
+public class  AuthController : ControllerBase
 {
     private readonly IAuthService authService;
 
@@ -24,7 +24,7 @@ public class AuthController : ControllerBase
     {
         try
         {
-            var token = await authService.Login(loginRequestDto.Login, loginRequestDto.Password);
+            var token = await authService.Login(loginRequestDto.UserKey, loginRequestDto.Login, loginRequestDto.Password);
 
             return Ok(new LoginResponseDto
             {
