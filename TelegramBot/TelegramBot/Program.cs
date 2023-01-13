@@ -1,4 +1,4 @@
-﻿using Services.Bot;
+﻿using UserInterface.Bot;
 
 namespace TelegramBot;
 
@@ -10,5 +10,6 @@ static class Program
     {
         bot = new Bot();
         Console.ReadKey();
+        bot.StopBot();
     }
 }

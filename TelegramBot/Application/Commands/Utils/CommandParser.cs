@@ -1,6 +1,6 @@
-using Services.Commands.Interfaces;
+using Application.Commands.Interfaces;
 
-namespace Services.Commands.Utils;
+namespace Application.Commands.Utils;
 
 public static class CommandParser
 {
@@ -13,7 +13,7 @@ public static class CommandParser
             ScheduleCommand.Command => new ScheduleCommand(),
             HelpCommand.Command => new HelpCommand(),
             LoginCommand.Command => new LoginCommand(),
-            _ => throw new Exception("Wrong command")
+            _ => new HelpCommand()//throw new Exception("Wrong command")
         };
     }
 }

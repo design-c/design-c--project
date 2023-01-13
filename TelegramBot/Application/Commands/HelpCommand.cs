@@ -1,10 +1,7 @@
 using System.Text;
-using Services.Commands.Interfaces;
-using Telegram.Bot;
-using Telegram.Bot.Types;
-using Services.InputMethods;
+using Application.Commands.Interfaces;
 
-namespace Services.Commands;
+namespace Application.Commands;
 
 public class HelpCommand : ICommand
 {
@@ -14,15 +11,14 @@ public class HelpCommand : ICommand
     public const string Command = "/help";
     
     public string Description => $"{Command} - Список и описание всех команд";
-    
-    public async Task Execute(TelegramBotClient client, Message message)
+    public string Execute()
     {
         var msg = new StringBuilder();
         
         msg.Append("Список команд:\n");
         foreach (var command in Commands)
             msg.Append($"{command.Description}\n");
-        
-        await client.SendTextMessageAsync(message.Chat.Id, msg.ToString(), replyMarkup:  InlineKeyboards.FinalKeyboard);
+
+        return msg.ToString();
     }
 }

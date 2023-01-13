@@ -1,10 +1,7 @@
 using System.Text;
-using Services.Commands.Interfaces;
-using Services.InputMethods;
-using Telegram.Bot;
-using Telegram.Bot.Types;
+using Application.Commands.Interfaces;
 
-namespace Services.Commands;
+namespace Application.Commands;
 
 public class ScheduleCommand : ICommand
 {
@@ -12,13 +9,13 @@ public class ScheduleCommand : ICommand
     
     public string Description => $"{Command} - Расписание дня";
     
-    public async Task Execute(TelegramBotClient client, Message message)
+    public string Execute()
     {
         var msg = new StringBuilder();
         msg.Append("Ваше расписание:\n");
         msg.Append("1 пара - 8:30 - Математика\n");
         msg.Append("3 пара - 12:00 - Физика\n");
-        
-        await client.SendTextMessageAsync(message.Chat.Id, msg.ToString(), replyMarkup: InlineKeyboards.FinalKeyboard);
+
+        return msg.ToString();
     }
 }
