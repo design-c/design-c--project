@@ -1,4 +1,4 @@
-using Api.controllers.Internal.Modeus;
+using Api.Extensions;
 using Api.Swagger;
 using Logic;
 using Logic.Settings;
@@ -52,6 +52,7 @@ builder.Services.AddAuthorization();
 builder.Services.Configure<AuthUrfuSettings>(builder.Configuration.GetSection(AuthUrfuSettings.UrfuAuth));
 builder.Services.Configure<AuthJwtSettings>(builder.Configuration.GetSection(AuthJwtSettings.JwtAuth));
 builder.Services.AddLogicServices();
+builder.Services.AddRepositories(builder.Configuration.GetConnectionString("DB"));
 
 var app = builder.Build();
 
