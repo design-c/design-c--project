@@ -2,12 +2,17 @@ using System.Collections.Concurrent;
 
 namespace Infrastructure.Repositories;
 
-public class UserRepository
+public static class UserRepository
 {
-    private readonly ConcurrentDictionary<long, string> users = new();
+    private static readonly ConcurrentDictionary<long, string> users = new();
 
-    public void AddUser(long num, string token)
+    public static void AddUser(long userId, string token)
     {
-        users.TryAdd(num, token);
+        users.TryAdd(userId, token);
+    }
+
+    public static string GetUserToken(long userId)
+    {
+        return users[userId];
     }
 }

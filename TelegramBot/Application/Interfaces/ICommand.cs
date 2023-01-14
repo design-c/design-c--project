@@ -4,5 +4,5 @@ public interface ICommand
 {
     string Command { get; }
     string Description { get; }
-    string Execute();
+    string Execute(long userId);
 }

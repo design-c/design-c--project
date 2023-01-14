@@ -4,12 +4,17 @@ namespace TelegramBot.StateMachine;
 
 public class StateMachine
 {
-    public IState CurrentState { get; private set; }
+    public BotState CurrentState { get; private set; }
 
-    public StateMachine(IState currentState)
+    public StateMachine()
+    {
+        CurrentState = null!;
+    }
+    
+    public StateMachine(BotState currentState)
     {
         CurrentState = currentState;
     }
 
-    public void ChangeState(IState state) => CurrentState = state;
+    public void ChangeState(BotState state) => CurrentState = state;
 }

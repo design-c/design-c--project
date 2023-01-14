@@ -7,16 +7,16 @@ public class HelpCommand : ICommand
 {
     public string Command => "/help";
     
-    public string Description => $"{Command} - Список и описание всех команд";
+    public string Description => "Список и описание всех команд";
 
-    public string Execute()
+    public string Execute(long userId)
     {
-        var showedCommands = CommandLists.FinalCommands;
+        var commands = CommandLists.MainCommands;
         var msg = new StringBuilder();
         
         msg.Append("Список команд:\n");
-        foreach (var command in showedCommands)
-            msg.Append($"{command.Description}\n");
+        foreach (var command in commands)
+            msg.Append($"{command.Command} - {command.Description}\n");
 
         return msg.ToString();
     }

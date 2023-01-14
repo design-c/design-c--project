@@ -1,3 +1,5 @@
+using Application.Commands;
+using Application.Commands.Utils;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using TelegramBot.InputMethods.InlineKeyboards;
@@ -5,34 +7,52 @@ using TelegramBot.StateMachine.States.Interfaces;
 
 namespace TelegramBot.StateMachine.States;
 
-public class StartState : IState
+public class StartState : BotState
 {
-    public async Task HandleMessage(ITelegramBotClient botClient, 
-        Message msg, 
-        CancellationToken cancellationToken, 
-        StateMachine stateMachine)
+    public StartState(ITelegramBotClient botClient, CancellationToken cancellationToken, StateMachine stateMachine) 
+        : base(botClient, cancellationToken, stateMachine) { }
+    
+    public override async Task HandleMessage(Message message)
     {
-        if (msg.Text == "дарова")
-        {
-            stateMachine.ChangeState(new LoginState());
-            return;
-        }
+        var commandOutput = CommandParser
+            .ParseCommand(CommandLists.StartCommands, message.Text)
+            .Execute(message.Chat.Id);
         
-        await botClient.SendTextMessageAsync(chatId: msg.Chat.Id, 
-            text: "дарова епта", 
-            replyMarkup: InlineKeyboards.StartKeyboard, 
-            cancellationToken: cancellationToken);
+        switch (message.Text)
+        {
+            case "/start":
+                CommandLists.StartCommands = CommandLists.StartCommands.Where(cmd => cmd is not StartCommand);
+                await TypeMessage(message, commandOutput, InlineKeyboards.StartKeyboard);
+                return;
+            
+            case "/login":
+                stateMachine.ChangeState(new LoginState(botClient, cancellationToken, stateMachine));
+                await TypeMessage(message, commandOutput, InlineKeyboards.LoginKeyboard);
+                return;
+            
+            default:
+                await TypeMessage(message, commandOutput, InlineKeyboards.StartKeyboard);
+                return;
+        }
     }
 
-    public async Task HandleCallbackQuery(ITelegramBotClient botClient, 
-        CallbackQuery callbackQuery,
-        CancellationToken cancellationToken, 
-        StateMachine stateMachine)
+    public override async Task HandleCallbackQuery(CallbackQuery callbackQuery)
     {
-        var msg = callbackQuery.Message;
-        await botClient.SendTextMessageAsync(chatId: msg.Chat.Id, 
-            text: "и чо", 
-            replyMarkup: InlineKeyboards.StartKeyboard, 
-            cancellationToken: cancellationToken);
+        var message = callbackQuery.Message;
+        var commandOutput = CommandParser
+            .ParseCommand(CommandLists.StartCommands, callbackQuery.Data)
+            .Execute(message.Chat.Id);
+        
+        switch (callbackQuery.Data)
+        {
+            case "/login":
+                await TypeMessage(message, commandOutput, InlineKeyboards.LoginKeyboard);
+                stateMachine.ChangeState(new LoginState(botClient, cancellationToken, stateMachine));
+                return;
+            
+            default:
+                await TypeMessage(message, commandOutput, InlineKeyboards.StartKeyboard);
+                return;
+        }
     }
 }

@@ -7,7 +7,7 @@ public class ScheduleCommand //: ICommand
 {
     public string Command => "/schedule";
     
-    public string Description => $"{Command} - Расписание дня";
+    public string Description => "Расписание дня";
     
     public string Execute()
     {
