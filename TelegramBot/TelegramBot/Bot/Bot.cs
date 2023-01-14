@@ -13,7 +13,6 @@ public class Bot
 {
     private const string Token = "5887050935:AAGlzQPcrF923D7FKpWphX5yNck8erdPFhI";
     private static readonly TelegramBotClient Client = new(Token);
-    private static readonly ConcurrentDictionary<long, string> users = new();
     
     private readonly CancellationTokenSource cts = new ();
     private readonly  ReceiverOptions receiverOptions = new () { AllowedUpdates = Array.Empty<UpdateType>() };
@@ -56,7 +55,7 @@ public class Bot
                         var loginInfo = text.Split(' ', StringSplitOptions.RemoveEmptyEntries);
                         var token = "AdajnfuasfmAUIfaufm3244";
 
-                        users.TryAdd(msg.Chat.Id, token);
+                        //users.TryAdd(msg.Chat.Id, token);
                         await Client.SendTextMessageAsync(msg.Chat.Id, "Авторизация произошла успешно!\nМеню:",
                             replyMarkup: InlineKeyboards.FinalKeyboard);
                 
@@ -65,8 +64,7 @@ public class Bot
                         var command = CommandParser.ParseCommand(text);
                         var commandOutput = command.Execute();
                         await Client.SendTextMessageAsync(msg.Chat.Id, commandOutput,replyMarkup: InlineKeyboards.FinalKeyboard);
-                        //await command.Execute(Client, msg);
-                    
+
                         return;
                     default:
                         await Client.SendTextMessageAsync(msg.Chat.Id, "заткнись и напиши команду", replyMarkup: InlineKeyboards.FinalKeyboard);
