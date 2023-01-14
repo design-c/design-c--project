@@ -2,7 +2,7 @@
 
 namespace Logic.Services.Interfaces;
 
-public interface IUrfuUserDataService
+public interface IUrfuUserServerDataService
 {
     Task<UserInfo> GetUserInfo(string userKey);
 
