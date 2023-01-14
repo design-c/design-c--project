@@ -1,19 +1,14 @@
 using Application.Commands.Interfaces;
+using Infrastructure.Utils;
 
 namespace Application.Commands;
 
 public static class CommandLists
 {
-    public static readonly IEnumerable<ICommand> AllCommands = GetAllCommands();
-    
-    private static IEnumerable<ICommand> GetAllCommands()
-    {
-        var allCommands = AppDomain.CurrentDomain
-            .GetAssemblies()
-            .SelectMany(x => x.GetTypes())
-            .Where(x => typeof(ICommand).IsAssignableFrom(x) && x is { IsInterface: false, IsAbstract: false })
-            .Select(x => (ICommand)Activator.CreateInstance(x)!);
+    public static readonly IEnumerable<ICommand> AllCommands = InterfaceUtils.GetImplementedClasses<ICommand>();
 
-        return allCommands;
-    }
+    public static readonly IEnumerable<ICommand> StartCommands = AllCommands.Where(cmd => cmd is LoginCommand);
+
+    public static readonly IEnumerable<ICommand> FinalCommands = AllCommands.Where(cmd =>
+        cmd is not LoginCommand && cmd is not StartCommand);
 }

@@ -1,6 +1,6 @@
 using Telegram.Bot.Types;
 
-namespace Application.InputMethods;
+namespace TelegramBot.InputMethods;
 
 public static class MenuCommands
 {

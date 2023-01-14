@@ -2,7 +2,7 @@ using Application.Commands.Interfaces;
 
 namespace Application.Commands;
 
-public class fakCommand : ICommand
+public class fakCommand //: ICommand
 {
     public string Command => "/fak";
 

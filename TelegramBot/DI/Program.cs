@@ -5,33 +5,25 @@ using TelegramBot.Bot;
 using TelegramBot.interfaces;
 using TelegramBot.Settings;
 
-namespace DI;
+var builder = new ConfigurationBuilder();
 
-static class Program
-{
-    private static void Main()
+builder
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json", optional: false);
+
+IConfiguration config = builder.Build();
+
+var host = Host
+    .CreateDefaultBuilder()
+    .ConfigureServices((_, services) =>
     {
-        var builder = new ConfigurationBuilder();
+        services.AddSingleton(_ => config.GetSection(BotSettings.Telegram).Get<BotSettings>());
+        services.AddSingleton<IBot, Bot>();
+    })
+    .Build();
 
-        builder
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", optional: false);
+var bot = ActivatorUtilities.CreateInstance<Bot>(host.Services);
 
-        IConfiguration config = builder.Build();
+Console.ReadKey();
 
-        var host = Host
-            .CreateDefaultBuilder()
-            .ConfigureServices((_, services) =>
-            {
-                services.AddSingleton(_ => config.GetSection(BotSettings.Telegram).Get<BotSettings>());
-                services.AddSingleton<IBot, Bot>();
-            })
-            .Build();
-
-        var bot = ActivatorUtilities.CreateInstance<Bot>(host.Services);
-
-        Console.ReadKey();
-
-        bot.StopBot();
-    }
-}
+bot.StopBot();
