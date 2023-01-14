@@ -7,16 +7,16 @@ namespace Application.Handlers.Urfu;
 
 public class GetUserInfoCommandHandler : IRequestHandler<GetUserInfoRequestCommand, UserInfo>
 {
-    private readonly IUserDataService _userDataService;
+    private readonly IUserDataService userDataService;
 
     public GetUserInfoCommandHandler(IUserDataService userDataService)
     {
-        this._userDataService = userDataService;
+        this.userDataService = userDataService;
     }
 
     public async Task<UserInfo> Handle(GetUserInfoRequestCommand request, CancellationToken cancellationToken)
     {
-        var userInfo = await _userDataService.GetUserInfo(request.UserKey);
+        var userInfo = await userDataService.GetUserInfo(request.UserKey);
 
         return userInfo;
     }

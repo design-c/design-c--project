@@ -8,21 +8,16 @@ namespace Application.Handlers.Urfu;
 
 public class GetUserMarksCommandHandler : IRequestHandler<GetUserMarksRequestCommand, IEnumerable<UserMark>>
 {
-    private readonly IUrfuUserServerDataService _userServerDataService;
-
-    private readonly IUserMarksRepository userMarksRepository;
-
-    public GetUserMarksCommandHandler(IUrfuUserServerDataService userServerDataService, IUserMarksRepository userMarksRepository)
+    private readonly IUserDataService userDataService;
+    
+    public GetUserMarksCommandHandler(IUserDataService userDataService)
     {
-        this._userServerDataService = userServerDataService;
-        this.userMarksRepository = userMarksRepository;
+        this.userDataService = userDataService;
     }
 
     public async Task<IEnumerable<UserMark>> Handle(GetUserMarksRequestCommand request, CancellationToken cancellationToken)
     {
-        // достаем данные о пользователе по id, если их нет, то получаем новые, записываем их по userid
-        
-        var userMarks = await _userServerDataService.GetUserMarks(request.UserKey);
+        var userMarks = await userDataService.GetUserMarks(request.UserKey);
 
         return userMarks;
     }
