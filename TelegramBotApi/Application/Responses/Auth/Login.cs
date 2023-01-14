@@ -1,6 +1,6 @@
-﻿namespace Api.controllers.Dto.Responses;
+﻿namespace Application.Responses.Auth;
 
-public class LoginResponseDto
+public class LoginResponse
 {
     public string Token { get; set; }
 

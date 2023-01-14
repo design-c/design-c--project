@@ -3,7 +3,7 @@ using Dal.Contracts.Interfaces;
 using Dal.Implementations.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace Api.Extensions;
+namespace Api.DependencyRegistration;
 
 public static class AddRepositoriesExtension
 {

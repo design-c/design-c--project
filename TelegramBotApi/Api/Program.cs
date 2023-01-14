@@ -1,12 +1,14 @@
-using Api.Extensions;
+using System.Reflection;
+using Api.DependencyRegistration;
 using Api.Swagger;
-using Logic;
 using Logic.Settings;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddMediatR(Assembly.Load("Application"));
 builder.Services.AddControllers();
 
 builder.Services.AddSwaggerGen(options => { options.SetDescriptions(); });
