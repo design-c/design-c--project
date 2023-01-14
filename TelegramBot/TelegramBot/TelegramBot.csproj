@@ -1,15 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <OutputType>Exe</OutputType>
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <RootNamespace>UserInterface</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Application\Application.csproj" />
-      <ProjectReference Include="..\UserInterface\UserInterface.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Telegram.Bot" Version="18.0.0" />
     </ItemGroup>
 
 </Project>
