@@ -40,7 +40,7 @@ public class UrfuUserDataService : IUrfuUserDataService
         const string userInfoClassName = "div.myself";
 
         var data = document.QuerySelector(userInfoClassName)!
-            .GetClearElementData()
+            .GetClearContentElementData()
             .ToArray();
 
         var name = data[0];
@@ -64,9 +64,9 @@ public class UrfuUserDataService : IUrfuUserDataService
         return document.QuerySelectorAll(userMarksBlockClass)
             .Select(x =>
             {
-                var name = x.QuerySelector(nameClass)!.GetClearElementData().First();
-                var point = x.QuerySelector(pointClass)!.GetClearElementData().First();
-                var mark = x.QuerySelector(markClass)!.GetClearElementData().First();
+                var name = x.QuerySelector(nameClass)!.GetClearHtmlElementData().First();
+                var point = x.QuerySelector(pointClass)!.GetClearHtmlElementData().First();
+                var mark = x.QuerySelector(markClass)!.GetClearHtmlElementData().First();
 
                 return new UserMark(name, double.Parse(point, CultureInfo.InvariantCulture), mark);
             });

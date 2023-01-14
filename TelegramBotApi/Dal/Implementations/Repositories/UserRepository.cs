@@ -11,5 +11,5 @@ public class UserRepository : BaseRepository<UserModel, int>, IUserRepository
     }
 
     public async Task<UserModel?> GetUserByKey(string userKey) =>
-        await DbSet.FirstAsync(userModel => userModel.UserKey.SequenceEqual(userKey));
+        await DbSet.FirstOrDefaultAsync(userModel => userModel.UserKey == userKey);
 }
