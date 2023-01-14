@@ -5,12 +5,12 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <RootNamespace>TelegramBot</RootNamespace>
+        <RootNamespace>DI</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Application\Application.csproj" />
-      <ProjectReference Include="..\UserInterface\UserInterface.csproj" />
+      <ProjectReference Include="..\TelegramBot\TelegramBot.csproj" />
     </ItemGroup>
 
 </Project>

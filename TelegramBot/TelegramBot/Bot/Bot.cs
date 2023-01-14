@@ -1,13 +1,13 @@
 using System.Collections.Concurrent;
 using Application.Commands.Utils;
-using Application.InputMethods;
 using Telegram.Bot;
 using Telegram.Bot.Exceptions;
 using Telegram.Bot.Polling;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
+using TelegramBot.InputMethods;
 
-namespace UserInterface.Bot;
+namespace TelegramBot.Bot;
 
 public class Bot
 {

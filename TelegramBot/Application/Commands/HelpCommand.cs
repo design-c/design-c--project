@@ -11,6 +11,7 @@ public class HelpCommand : ICommand
     public const string Command = "/help";
     
     public string Description => $"{Command} - Список и описание всех команд";
+    
     public string Execute()
     {
         var msg = new StringBuilder();

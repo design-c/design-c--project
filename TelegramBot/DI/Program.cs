@@ -1,6 +1,6 @@
-﻿using UserInterface.Bot;
+﻿using TelegramBot.Bot;
 
-namespace TelegramBot;
+namespace DI;
 
 static class Program
 {
