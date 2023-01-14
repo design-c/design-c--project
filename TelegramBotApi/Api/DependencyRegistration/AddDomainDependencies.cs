@@ -12,7 +12,8 @@ public static class AddDomainServices
     {
         services
             .AddTransient<IAuthService, AuthService>()
-            .AddTransient<IUrfuUserDataService, UrfuUserDataService>();
+            .AddTransient<IUrfuUserServerDataService, UrfuUserServerDataService>()
+            .AddTransient<IUserDataService, UrfuUserDataService>();
 
         services.TryAddScoped<HttpClient>();
         services.TryAddScoped<WebClient>();
