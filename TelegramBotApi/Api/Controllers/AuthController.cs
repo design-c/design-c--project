@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace Api.controllers;
 
 [ApiController]
-[Route("/auth")]
 public class AuthController : ControllerBase
 {
     private readonly IMediator mediator;

@@ -14,7 +14,7 @@ public static class AddRepositoriesExtension
             options.UseNpgsql(connectionString, o => o.MigrationsAssembly("Dal")));
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IUserInfoRepository, UserInfoRepository>();
-        services.AddScoped<IUserScheduleRepository, UserScheduleRepository>();
+        services.AddScoped<IUserMarksRepository, UserMarksRepository>();
 
         return services;
     }

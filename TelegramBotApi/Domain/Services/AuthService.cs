@@ -1,5 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using Dal.Contracts.Interfaces;
+using Dal.Contracts.Models;
 using Logic.Extensions;
 using Logic.Services.Interfaces;
 using Logic.Settings;
@@ -14,27 +16,58 @@ public class AuthService : IAuthService
 
     private readonly AuthUrfuSettings authUrfuSettings;
 
+    private readonly IUserRepository userRepository;
+
     private readonly HttpClient client;
 
     public AuthService(
         IOptions<AuthJwtSettings> authJwtOptions,
         IOptions<AuthUrfuSettings> authUrfuOptions,
+        IUserRepository userRepository,
         HttpClient httpClient
     )
     {
         authJwtSettings = authJwtOptions.Value;
         authUrfuSettings = authUrfuOptions.Value;
+        this.userRepository = userRepository;
         client = httpClient;
     }
 
-    public async Task<JwtSecurityToken> Login(string login, string password)
+    public async Task<JwtSecurityToken> Login(string login, string password, string userKey)
     {
         var isPasswordAndLoginCorrect = await IsPasswordAndLoginCorrect(login, password);
 
         if (!isPasswordAndLoginCorrect)
             throw new Exception("Неверный логин или пароль от учётной записи УрФУ.");
 
+        var user = await userRepository.GetUserByKey(userKey);
+
+        if (user == null)
+        {
+            await userRepository.CreateAsync(new UserModel { Login = login, Password = password, UserKey = userKey });
+        }
+        else
+        {
+            user.Login = login;
+            user.Password = password;
+            user.UserKey = userKey;
+            await userRepository.UpdateAsync(user);
+        }
+
         return GetToken(login);
+    }
+
+    public async Task LoginByUserId(string userKey)
+    {
+        var user = await userRepository.GetUserByKey(userKey);
+
+        if (user == null)
+            throw new Exception("Пользователя с таким userKey в базе нет");
+
+        var isPasswordAndLoginCorrect = await IsPasswordAndLoginCorrect(user.Login, user.Password);
+
+        if (!isPasswordAndLoginCorrect)
+            throw new Exception("Неправильный логин или пароль пользователя записан в базу данных");
     }
 
     private JwtSecurityToken GetToken(string login)

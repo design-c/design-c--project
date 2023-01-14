@@ -1,4 +1,6 @@
-﻿using Logic.Services;
+﻿using System.Net;
+using AngleSharp.Html.Parser;
+using Logic.Services;
 using Logic.Services.Interfaces;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -10,6 +12,10 @@ public static class AddDomainServices
     {
         services
             .AddTransient<IAuthService, AuthService>()
-            .TryAddScoped<HttpClient>();
+            .AddTransient<IUrfuUserDataService, UrfuUserDataService>();
+
+        services.TryAddScoped<HttpClient>();
+        services.TryAddScoped<WebClient>();
+        services.TryAddScoped<HtmlParser>();
     }
 }

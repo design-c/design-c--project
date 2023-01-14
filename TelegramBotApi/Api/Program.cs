@@ -53,6 +53,7 @@ builder.Services.AddAuthorization();
 
 builder.Services.Configure<AuthUrfuSettings>(builder.Configuration.GetSection(AuthUrfuSettings.UrfuAuth));
 builder.Services.Configure<AuthJwtSettings>(builder.Configuration.GetSection(AuthJwtSettings.JwtAuth));
+builder.Services.Configure<UrfuUserDataSettings>(builder.Configuration.GetSection(UrfuUserDataSettings.UrfuUser));
 builder.Services.AddLogicServices();
 builder.Services.AddRepositories(builder.Configuration.GetConnectionString("DB"));
 
