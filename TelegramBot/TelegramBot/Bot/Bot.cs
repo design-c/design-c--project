@@ -6,20 +6,22 @@ using Telegram.Bot.Polling;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using TelegramBot.InputMethods;
+using TelegramBot.interfaces;
+using TelegramBot.Settings;
 
 namespace TelegramBot.Bot;
 
-public class Bot
+public class Bot : IBot
 {
-    private const string Token = "5887050935:AAGlzQPcrF923D7FKpWphX5yNck8erdPFhI";
-    private static readonly TelegramBotClient Client = new(Token);
-    
-    private readonly CancellationTokenSource cts = new ();
-    private readonly  ReceiverOptions receiverOptions = new () { AllowedUpdates = Array.Empty<UpdateType>() };
-    
-    public Bot()
+    private readonly TelegramBotClient client;
+    private readonly ConcurrentDictionary<long, string> users = new();
+    private readonly CancellationTokenSource cts = new();
+    private readonly ReceiverOptions receiverOptions = new() { AllowedUpdates = Array.Empty<UpdateType>() };
+
+    public Bot(BotSettings botSettings)
     {
-        Client.StartReceiving(HandleUpdateAsync, HandlePollingErrorAsync, receiverOptions, cts.Token);
+        client = new TelegramBotClient(botSettings.Token);
+        client.StartReceiving(HandleUpdateAsync, HandlePollingErrorAsync, receiverOptions, cts.Token);
         //Client.SetWebhookAsync();
         //Client.DeleteWebhookAsync();
         //Client.OnMessage += OnMessageHandler;
@@ -42,7 +44,7 @@ public class Bot
         
                 if (text == null)
                 {
-                    await Client.SendTextMessageAsync(msg.Chat.Id, "пиши текстом мужик", replyMarkup: InlineKeyboards.FinalKeyboard);
+                    await client.SendTextMessageAsync(msg.Chat.Id, "пиши текстом мужик", replyMarkup: InlineKeyboards.FinalKeyboard);
 
                     return;
                 }
@@ -56,18 +58,18 @@ public class Bot
                         var token = "AdajnfuasfmAUIfaufm3244";
 
                         //users.TryAdd(msg.Chat.Id, token);
-                        await Client.SendTextMessageAsync(msg.Chat.Id, "Авторизация произошла успешно!\nМеню:",
+                        await client.SendTextMessageAsync(msg.Chat.Id, "Авторизация произошла успешно!\nМеню:",
                             replyMarkup: InlineKeyboards.FinalKeyboard);
                 
                         return;
                     case '/':
                         var command = CommandParser.ParseCommand(text);
                         var commandOutput = command.Execute();
-                        await Client.SendTextMessageAsync(msg.Chat.Id, commandOutput,replyMarkup: InlineKeyboards.FinalKeyboard);
+                        await client.SendTextMessageAsync(msg.Chat.Id, commandOutput,replyMarkup: InlineKeyboards.FinalKeyboard);
 
                         return;
                     default:
-                        await Client.SendTextMessageAsync(msg.Chat.Id, "заткнись и напиши команду", replyMarkup: InlineKeyboards.FinalKeyboard);
+                        await client.SendTextMessageAsync(msg.Chat.Id, "заткнись и напиши команду", replyMarkup: InlineKeyboards.FinalKeyboard);
                     
                         return;
                 }
@@ -82,7 +84,7 @@ public class Bot
 
                 var command = CommandParser.ParseCommand(update.CallbackQuery.Data);
                 var commandOutput = command.Execute();
-                await Client.SendTextMessageAsync(msg.Chat.Id, commandOutput, replyMarkup: InlineKeyboards.FinalKeyboard, cancellationToken: cancellationToken);
+                await client.SendTextMessageAsync(msg.Chat.Id, commandOutput, replyMarkup: InlineKeyboards.FinalKeyboard, cancellationToken: cancellationToken);
                 break;
             }
         }
