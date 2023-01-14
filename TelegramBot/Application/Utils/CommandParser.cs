@@ -4,9 +4,18 @@ namespace Application.Commands.Utils;
 
 public static class CommandParser
 {
-    public static ICommand ParseCommand(string text)
+    public static ICommand ParseCommand(IEnumerable<ICommand> commands, string text)
     {
-        var commands = AppDomain.CurrentDomain
+        foreach (var command in commands)
+        {
+            if (text == command.Command)
+                return command;
+        }
+
+        return new WrongCommand(text);
+        
+        /*
+        var commands1 = AppDomain.CurrentDomain
             .GetAssemblies()
             .SelectMany(s => s.GetTypes())
             .Where(t => t.GetInterfaces().Contains(typeof(ICommand)));
@@ -21,16 +30,7 @@ public static class CommandParser
             .Where(x => typeof(ICommand).IsAssignableFrom(x) && x is { IsInterface: false, IsAbstract: false })
             .Select(x => (ICommand)Activator.CreateInstance(x)!);
 
-        var allCommands = CommandLists.AllCommands;
-
-        foreach (var command in allCommands)
-        {
-            if (text == command.Command)
-                return command;
-        }
-
-        return new HelpCommand();
-        /*
+        
         return text switch
         {
             StartCommand.Command => new StartCommand(),

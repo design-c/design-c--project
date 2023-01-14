@@ -1,3 +1,4 @@
+using Application.Commands;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using TelegramBot.InputMethods.InlineKeyboards;
@@ -5,35 +6,28 @@ using TelegramBot.StateMachine.States.Interfaces;
 
 namespace TelegramBot.StateMachine.States;
 
-public class LoginState : IState
+public class LoginState : BotState
 {
-    public async Task HandleMessage(ITelegramBotClient botClient, 
-        Message msg, 
-        CancellationToken cancellationToken, 
-        StateMachine stateMachine)
+    public LoginState(ITelegramBotClient botClient, CancellationToken cancellationToken, StateMachine stateMachine) 
+        : base(botClient, cancellationToken, stateMachine) { }
+    
+    public override async Task HandleMessage(Message message)
     {
-        if (msg.Text == "сам завались")
+        var loginInfo = message.Text.Split(StartLoginCommand.LoginInfoSeparator);
+
+        if (loginInfo.Length != 2)
         {
-            stateMachine.ChangeState(new MainState());
+            await TypeMessage(message, $"Неправильный формат логина и пароля.\nВведите в формате {StartLoginCommand.LoginFormat}", 
+                InlineKeyboards.LoginKeyboard);
             return;
         }
-        
-        await botClient.SendTextMessageAsync(chatId: msg.Chat.Id, 
-                    text: "завались", 
-                    replyMarkup: InlineKeyboards.StartKeyboard, 
-                    cancellationToken: cancellationToken);
-         
+
+        await TypeMessage(message,new LoginCommand(loginInfo, message.Chat.Id).Execute(), InlineKeyboards.LoginKeyboard);
+        stateMachine.ChangeState(new MainState(botClient, cancellationToken, stateMachine));
     }
 
-    public async Task HandleCallbackQuery(ITelegramBotClient botClient, 
-        CallbackQuery callbackQuery,
-        CancellationToken cancellationToken, 
-        StateMachine stateMachine)
+    public override async Task HandleCallbackQuery(CallbackQuery callbackQuery)
     {
-        var msg = callbackQuery.Message;
-        await botClient.SendTextMessageAsync(chatId: msg.Chat.Id, 
-            text: "да не кликай", 
-            replyMarkup: InlineKeyboards.StartKeyboard, 
-            cancellationToken: cancellationToken);
+        return;
     }
 }

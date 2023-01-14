@@ -4,14 +4,24 @@ namespace Application.Commands;
 
 public class LoginCommand : ICommand
 {
-    public string Command => "/login";
+    private string[] loginInfo;
+    private long userId;
+    
+    public string Command => "";
+    
+    public string Description => "";
+    
+    public LoginCommand() { }
 
-    public string Description => $"{Command} - Авторизироваться";
+    public LoginCommand(string[] loginInfo, long userId)
+    {
+        this.loginInfo = loginInfo;
+        this.userId = userId;
+    }
     
     public string Execute()
     {
-        var msg = "Введите логин и пароль от личного кабинета УрФУ, начав сообщение с \":\":";
-        
-        return msg;
+        // TODO: domain login
+        return "Успешный вход\nДля получения списка команд, воспользуйтесь командой /help";
     }
 }

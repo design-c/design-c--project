@@ -7,10 +7,11 @@ public class UserinfoCommand : ICommand
 {
     public string Command => "/userinfo";
     
-    public string Description => $"{Command} - Информация о пользователе";
+    public string Description => "Информация о пользователе";
     
     public string Execute()
     {
+        // TODO: domain get userinfo
         var msg = new StringBuilder();
         msg.Append("Ваши данные:\n");
         msg.Append($"Электронная почта: дебил@gmail.com\n");

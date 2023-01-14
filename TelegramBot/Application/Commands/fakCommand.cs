@@ -6,7 +6,7 @@ public class fakCommand //: ICommand
 {
     public string Command => "/fak";
 
-    public string Description => $"{Command} - fak blyat";
+    public string Description => "fak blyat";
     
     public string Execute()
     {
