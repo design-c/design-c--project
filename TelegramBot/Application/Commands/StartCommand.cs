@@ -4,7 +4,7 @@ namespace Application.Commands;
 
 public class StartCommand : ICommand
 {
-    public const string Command = "/start";
+    public string Command => "/start";
     
     public string Description => $"{Command} - Старт";
     

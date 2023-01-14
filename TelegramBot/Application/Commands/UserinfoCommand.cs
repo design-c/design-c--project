@@ -5,7 +5,7 @@ namespace Application.Commands;
 
 public class UserinfoCommand : ICommand
 {
-    public const string Command = "/userinfo";
+    public string Command => "/userinfo";
     
     public string Description => $"{Command} - Информация о пользователе";
     

@@ -4,7 +4,7 @@ namespace Application.Commands;
 
 public class LoginCommand : ICommand
 {
-    public const string Command = "/login";
+    public string Command => "/login";
 
     public string Description => $"{Command} - Авторизироваться";
     

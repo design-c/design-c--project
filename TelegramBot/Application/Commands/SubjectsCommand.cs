@@ -4,7 +4,7 @@ namespace Application.Commands;
 
 public class SubjectsCommand : ICommand
 {
-    public const string Command = "/subjects";
+    public string Command => "/subjects";
     
     public string Description => $"{Command} - Список оценок по предметам";
     

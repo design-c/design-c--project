@@ -3,9 +3,9 @@ using Application.Commands.Interfaces;
 
 namespace Application.Commands;
 
-public class ScheduleCommand : ICommand
+public class ScheduleCommand //: ICommand
 {
-    public const string Command = "/schedule";
+    public string Command => "/schedule";
     
     public string Description => $"{Command} - Расписание дня";
     

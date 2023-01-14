@@ -19,18 +19,28 @@ public static class InlineKeyboards
         new[] { InlineKeyboardButton.WithCallbackData("Авторизироваться", "/login") }
     });
     
-    public static readonly InlineKeyboardMarkup FinalKeyboard = new(new[]
+    public static readonly InlineKeyboardMarkup FinalKeyboard2 = new(new[]
     {
         MakeInlineButton(new HelpCommand()),
         MakeInlineButton(new UserinfoCommand()),
-        MakeInlineButton(new ScheduleCommand()),
+        //MakeInlineButton(new ScheduleCommand()),
         MakeInlineButton(new SubjectsCommand())
     });
+
+    public static readonly InlineKeyboardMarkup FinalKeyboard = MakeInlineKeyboard();
     
     public static readonly InlineKeyboardMarkup StartKeyboard = new(new[]
     {
         MakeInlineButton(new LoginCommand())
     });
+
+    private static InlineKeyboardMarkup MakeInlineKeyboard()
+    {
+        var buttons = CommandLists.AllCommands
+            .Select(command => MakeInlineButton(command));
+
+        return new InlineKeyboardMarkup(buttons);
+    }
     
     private static InlineKeyboardButton[] MakeInlineButton(ICommand command)
     {
