@@ -9,8 +9,15 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Application\Application.csproj" />
-      <ProjectReference Include="..\TelegramBot\TelegramBot.csproj" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.6"/>
+        <ProjectReference Include="..\Application\Application.csproj"/>
+        <ProjectReference Include="..\TelegramBot\TelegramBot.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Update="appsettings.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
 
 </Project>
