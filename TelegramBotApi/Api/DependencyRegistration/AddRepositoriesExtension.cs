@@ -7,15 +7,13 @@ namespace Api.DependencyRegistration;
 
 public static class AddRepositoriesExtension
 {
-    public static IServiceCollection AddRepositories(this IServiceCollection services, string? connectionString)
+    public static void AddRepositories(this IServiceCollection services, string? connectionString)
     {
-        services.AddScoped<DbContext, DataContext>();
+        services.AddTransient<DbContext, DataContext>();
         services.AddDbContext<DataContext>(options => 
             options.UseNpgsql(connectionString, o => o.MigrationsAssembly("Dal")));
-        services.AddScoped<IUserRepository, UserRepository>();
-        services.AddScoped<IUserInfoRepository, UserInfoRepository>();
-        services.AddScoped<IUserMarksRepository, UserMarksRepository>();
-
-        return services;
+        services.AddTransient<IUserRepository, UserRepository>();
+        services.AddTransient<IUserInfoRepository, UserInfoRepository>();
+        services.AddTransient<IUserMarksRepository, UserMarksRepository>();
     }
 }
