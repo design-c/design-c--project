@@ -11,7 +11,7 @@ public class StartLoginCommand : ICommand
 
     public string Description => "Авторизироваться";
     
-    public string Execute()
+    public string Execute(long userId)
     {
         return $"Введите логин и пароль от личного кабинета УрФУ в формате {LoginFormat}";
     }

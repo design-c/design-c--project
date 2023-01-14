@@ -8,7 +8,7 @@ public class StartCommand : ICommand
     
     public string Description => "Старт";
     
-    public string Execute()
+    public string Execute(long userId)
     {
         return "Здравствуйте!\nДля начала работы авторизируйтесь с помощью команды /login";
     }

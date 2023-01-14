@@ -1,11 +1,11 @@
 using Application.Commands.Interfaces;
+using Domain;
 
 namespace Application.Commands;
 
 public class LoginCommand : ICommand
 {
     private string[] loginInfo;
-    private long userId;
     
     public string Command => "";
     
@@ -13,15 +13,15 @@ public class LoginCommand : ICommand
     
     public LoginCommand() { }
 
-    public LoginCommand(string[] loginInfo, long userId)
+    public LoginCommand(string[] loginInfo)
     {
         this.loginInfo = loginInfo;
-        this.userId = userId;
     }
     
-    public string Execute()
+    public string Execute(long userId)
     {
-        // TODO: domain login
+        LoginRequest.LoginUser(loginInfo, userId);
+        
         return "Успешный вход\nДля получения списка команд, воспользуйтесь командой /help";
     }
 }

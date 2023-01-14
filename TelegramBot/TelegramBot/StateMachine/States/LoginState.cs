@@ -14,7 +14,8 @@ public class LoginState : BotState
     public override async Task HandleMessage(Message message)
     {
         var loginInfo = message.Text.Split(StartLoginCommand.LoginInfoSeparator);
-
+        var userId = message.Chat.Id;
+        
         if (loginInfo.Length != 2)
         {
             await TypeMessage(message, $"Неправильный формат логина и пароля.\nВведите в формате {StartLoginCommand.LoginFormat}", 
@@ -22,7 +23,7 @@ public class LoginState : BotState
             return;
         }
 
-        await TypeMessage(message,new LoginCommand(loginInfo, message.Chat.Id).Execute(), InlineKeyboards.LoginKeyboard);
+        await TypeMessage(message,new LoginCommand(loginInfo).Execute(userId), InlineKeyboards.LoginKeyboard);
         stateMachine.ChangeState(new MainState(botClient, cancellationToken, stateMachine));
     }
 

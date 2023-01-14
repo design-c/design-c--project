@@ -1,10 +1,9 @@
-using Application.Commands.Utils;
+using System.Collections.Concurrent;
 using Telegram.Bot;
 using Telegram.Bot.Exceptions;
 using Telegram.Bot.Polling;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
-using TelegramBot.InputMethods.InlineKeyboards;
 using TelegramBot.interfaces;
 using TelegramBot.Settings;
 using TelegramBot.StateMachine.States;
@@ -27,10 +26,6 @@ public class Bot : IBot
         stateMachine = new StateMachine.StateMachine();
         stateMachine.ChangeState(new StartState(client, cts.Token, stateMachine));
         client.StartReceiving(HandleUpdateAsync, HandlePollingErrorAsync, receiverOptions, cts.Token);
-        //Client.SetWebhookAsync();
-        //Client.DeleteWebhookAsync();
-        //Client.OnMessage += OnMessageHandler;
-        //Client.OnCallbackQuery += OnCallbackHandler;
     }
 
     public void StopBot()

@@ -14,7 +14,9 @@ public class StartState : BotState
     
     public override async Task HandleMessage(Message message)
     {
-        var commandOutput = CommandParser.ParseCommand(CommandLists.StartCommands, message.Text).Execute();
+        var commandOutput = CommandParser
+            .ParseCommand(CommandLists.StartCommands, message.Text)
+            .Execute(message.Chat.Id);
         
         switch (message.Text)
         {
@@ -37,7 +39,9 @@ public class StartState : BotState
     public override async Task HandleCallbackQuery(CallbackQuery callbackQuery)
     {
         var message = callbackQuery.Message;
-        var commandOutput = CommandParser.ParseCommand(CommandLists.StartCommands, callbackQuery.Data).Execute();
+        var commandOutput = CommandParser
+            .ParseCommand(CommandLists.StartCommands, callbackQuery.Data)
+            .Execute(message.Chat.Id);
         
         switch (callbackQuery.Data)
         {

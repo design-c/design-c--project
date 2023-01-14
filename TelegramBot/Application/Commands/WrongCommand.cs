@@ -15,7 +15,7 @@ public class WrongCommand : ICommand
         this.wrongText = wrongText;
     }
     
-    public string Execute()
+    public string Execute(long userId)
     {
         return
             $"Неопознанная команда \"{wrongText}\".\n";//Воспользуйтесь /help для получения списка всех доступных команд";

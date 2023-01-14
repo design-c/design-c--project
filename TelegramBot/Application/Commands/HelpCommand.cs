@@ -9,7 +9,7 @@ public class HelpCommand : ICommand
     
     public string Description => "Список и описание всех команд";
 
-    public string Execute()
+    public string Execute(long userId)
     {
         var commands = CommandLists.MainCommands;
         var msg = new StringBuilder();
