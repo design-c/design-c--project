@@ -3,12 +3,12 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine AS build
 WORKDIR /src
 COPY . .
-RUN dotnet build "Api/Api.csproj" -c Release -o /app/build
+RUN dotnet build "DI/DI.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Api/Api.csproj" -c Release -o /app/publish
+RUN dotnet publish "DI/DI.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Api.dll"]
+ENTRYPOINT ["dotnet", "DI.dll"]

@@ -23,7 +23,7 @@ var host = Host
     .Build();
 
 var bot = ActivatorUtilities.CreateInstance<Bot>(host.Services);
-
-Console.ReadKey();
+var waiter = new ManualResetEventSlim(false);
+waiter.Wait();
 
 bot.StopBot();

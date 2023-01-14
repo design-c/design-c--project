@@ -24,3 +24,15 @@ services:
       - "5050:80"
     depends_on:
       - db
+  api:
+    build:
+      context: ./TelegramBotApi
+    expose:
+      - 80
+    depends_on:
+      - db
+  tg-bot:
+    build:
+      context: ./TelegramBot
+    depends_on:
+      - api
