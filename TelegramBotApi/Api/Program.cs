@@ -1,12 +1,14 @@
-using Api.controllers.Internal.Modeus;
+using System.Reflection;
+using Api.DependencyRegistration;
 using Api.Swagger;
-using Logic;
 using Logic.Settings;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddMediatR(Assembly.Load("Application"));
 builder.Services.AddControllers();
 
 builder.Services.AddSwaggerGen(options => { options.SetDescriptions(); });
@@ -51,7 +53,9 @@ builder.Services.AddAuthorization();
 
 builder.Services.Configure<AuthUrfuSettings>(builder.Configuration.GetSection(AuthUrfuSettings.UrfuAuth));
 builder.Services.Configure<AuthJwtSettings>(builder.Configuration.GetSection(AuthJwtSettings.JwtAuth));
+builder.Services.Configure<UrfuUserDataSettings>(builder.Configuration.GetSection(UrfuUserDataSettings.UrfuUser));
 builder.Services.AddLogicServices();
+builder.Services.AddRepositories(builder.Configuration.GetConnectionString("DB"));
 
 var app = builder.Build();
 
