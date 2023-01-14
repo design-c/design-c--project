@@ -8,7 +8,7 @@ namespace Api.Controllers;
 
 [ApiController]
 [Route("/urfu")]
-// [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class UrfuController : ControllerBase
 {
     private readonly IMediator mediator;
