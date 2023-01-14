@@ -2,6 +2,7 @@
 
 namespace Dal.Contracts.Interfaces;
 
-public interface IUserRepository: IRepository<UserModel, int>
+public interface IUserRepository : IRepository<UserModel, int>
 {
+    public Task<UserModel?> GetUserByKey(string userKey);
 }

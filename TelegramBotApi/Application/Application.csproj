@@ -14,10 +14,4 @@
       <ProjectReference Include="..\Domain\Domain.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Handlers\Urfu" />
-      <Folder Include="Requests\Urfu" />
-      <Folder Include="Responses\Urfu" />
-    </ItemGroup>
-
 </Project>
