@@ -41,14 +41,14 @@ public class Bot : IBot
             {
                 var msg = update.Message;
                 var text = msg.Text;
-
+        
                 if (text == null)
                 {
                     await client.SendTextMessageAsync(msg.Chat.Id, "пиши текстом мужик", replyMarkup: InlineKeyboards.FinalKeyboard);
 
                     return;
                 }
-
+        
                 Console.WriteLine($"{msg.Date} - {msg.Chat.Username} - {text}");
 
                 switch (text[0])
@@ -57,22 +57,20 @@ public class Bot : IBot
                         var loginInfo = text.Split(' ', StringSplitOptions.RemoveEmptyEntries);
                         var token = "AdajnfuasfmAUIfaufm3244";
 
-                        users.TryAdd(msg.Chat.Id, token);
+                        //users.TryAdd(msg.Chat.Id, token);
                         await client.SendTextMessageAsync(msg.Chat.Id, "Авторизация произошла успешно!\nМеню:",
                             replyMarkup: InlineKeyboards.FinalKeyboard);
-
+                
                         return;
                     case '/':
                         var command = CommandParser.ParseCommand(text);
                         var commandOutput = command.Execute();
-                        await client.SendTextMessageAsync(msg.Chat.Id, commandOutput, replyMarkup: InlineKeyboards.FinalKeyboard);
-                        //await command.Execute(Client, msg);
+                        await client.SendTextMessageAsync(msg.Chat.Id, commandOutput,replyMarkup: InlineKeyboards.FinalKeyboard);
 
                         return;
                     default:
-                        await client.SendTextMessageAsync(msg.Chat.Id, "заткнись и напиши команду",
-                            replyMarkup: InlineKeyboards.FinalKeyboard);
-
+                        await client.SendTextMessageAsync(msg.Chat.Id, "заткнись и напиши команду", replyMarkup: InlineKeyboards.FinalKeyboard);
+                    
                         return;
                 }
 
@@ -81,18 +79,17 @@ public class Bot : IBot
             case { Type: UpdateType.CallbackQuery, CallbackQuery: { } }:
             {
                 var msg = update.CallbackQuery.Message;
-
+            
                 Console.WriteLine($"{msg.Date} - {msg.Chat.Username} - Кнопка - {update.CallbackQuery.Data}");
 
                 var command = CommandParser.ParseCommand(update.CallbackQuery.Data);
                 var commandOutput = command.Execute();
-                await client.SendTextMessageAsync(msg.Chat.Id, commandOutput, replyMarkup: InlineKeyboards.FinalKeyboard,
-                    cancellationToken: cancellationToken);
+                await client.SendTextMessageAsync(msg.Chat.Id, commandOutput, replyMarkup: InlineKeyboards.FinalKeyboard, cancellationToken: cancellationToken);
                 break;
             }
         }
     }
-
+    
     private Task HandlePollingErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
     {
         var errorMessage = exception switch
