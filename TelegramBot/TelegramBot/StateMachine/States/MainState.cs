@@ -18,7 +18,7 @@ public class MainState : BotState
         
         if (text == null)
         {
-            await TypeMessage("пиши текстом мужик", InlineKeyboards.MainKeyboard);
+            await TypeMessage("Можно выполнять только текстовые команды и кнопки.", InlineKeyboards.MainKeyboard);
             return;
         }
 
