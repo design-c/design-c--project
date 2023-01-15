@@ -18,11 +18,11 @@ public class UrfuUserDataService: IUserDataService
         this.userRepository = userRepository;
     }
     
-    public async Task<UserInfo> GetUserInfo(string userKey)
+    public async Task<UserInfo> GetUserInfo(string userKey, bool needUpdate)
     {
         var user = (await userRepository.GetUserByKeyWithInfo(userKey))!;
 
-        if (user.Info != null)
+        if (user.Info != null && !needUpdate)
             return new UserInfo(user.Info.Name, user.Info.Group, user.Info.StudentCardNumber, user.Info.Email);
 
         var userinfoFromSever = await userServerDataService.GetUserInfo(userKey);
@@ -39,11 +39,11 @@ public class UrfuUserDataService: IUserDataService
         return userinfoFromSever;
     }
 
-    public async Task<IEnumerable<UserMark>> GetUserMarks(string userKey)
+    public async Task<IEnumerable<UserMark>> GetUserMarks(string userKey, bool needUpdate)
     {
         var user = (await userRepository.GetUserByKeyWithMarks(userKey))!;
         var userMarks = user.Marks!.ToArray();
-        if (userMarks.Length > 0)
+        if (userMarks.Length > 0 && !needUpdate)
             return userMarks.Select(m => new UserMark(m.Name, m.Point, m.Mark));
 
         var userMarksFromSever = (await userServerDataService.GetUserMarks(userKey)).ToArray();

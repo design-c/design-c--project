@@ -6,4 +6,6 @@ namespace Application.Requests.Urfu;
 public class GetUserInfoRequestCommand : IRequest<UserInfo>
 {
     public string UserKey { get; set; }
+    
+    public bool NeedUpdate { get; set; }
 }
