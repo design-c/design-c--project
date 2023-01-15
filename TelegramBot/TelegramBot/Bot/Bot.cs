@@ -5,55 +5,54 @@ using Telegram.Bot.Polling;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using TelegramBot.interfaces;
-using TelegramBot.Settings;
-using TelegramBot.StateMachine.States;
 
 namespace TelegramBot.Bot;
 
 public class Bot : IBot
 {
-    private readonly TelegramBotClient client;
-    private readonly CancellationTokenSource cts;
-    private readonly ReceiverOptions receiverOptions;
+    private readonly CancellationTokenSource cancellationToken;
 
     //private StateMachine.StateMachine stateMachine;
     private ConcurrentDictionary<long, StateMachine.StateMachine> userStateMachines;
-    
-    public Bot(BotSettings botSettings)
+
+    public Bot(
+        TelegramBotClient client,
+        CancellationTokenSource cancellationToken,
+        ReceiverOptions receiverOptions
+    )
     {
-        client = new TelegramBotClient(botSettings.Token);
-        cts = new CancellationTokenSource();
-        receiverOptions = new ReceiverOptions { AllowedUpdates = Array.Empty<UpdateType>() };
+        this.cancellationToken = cancellationToken;
         userStateMachines = new ConcurrentDictionary<long, StateMachine.StateMachine>();
         //stateMachine = new StateMachine.StateMachine();
         //stateMachine.ChangeState(new StartState(client, cts.Token, stateMachine));
-        client.StartReceiving(HandleUpdateAsync, HandlePollingErrorAsync, receiverOptions, cts.Token);
+        client.StartReceiving(HandleUpdateAsync, HandlePollingErrorAsync, receiverOptions, cancellationToken.Token);
     }
 
-    public void StopBot()
-    {
-        cts.Cancel();
-    }
-    
-    private async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken) 
+    public void StopBot() => cancellationToken.Cancel();
+
+    private async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update,
+        CancellationToken cancellationToken)
     {
         switch (update)
         {
             case { Type: UpdateType.Message, Message: { } }:
                 CheckUser(update.Message.Chat.Id, botClient, cancellationToken);
-                Console.WriteLine($"{update.Message.Date} - {update.Message.Chat.Username} - {update.Message.Text} - {userStateMachines[update.Message.Chat.Id].CurrentState.GetType()}");
+                Console.WriteLine(
+                    $"{update.Message.Date} - {update.Message.Chat.Username} - {update.Message.Text} - {userStateMachines[update.Message.Chat.Id].CurrentState.GetType()}");
                 await userStateMachines[update.Message.Chat.Id].CurrentState.HandleMessage(update.Message);
                 return;
-            
-            case { Type: UpdateType.CallbackQuery, CallbackQuery: { }, CallbackQuery.Message: { }}:
+
+            case { Type: UpdateType.CallbackQuery, CallbackQuery: { }, CallbackQuery.Message: { } }:
                 CheckUser(update.CallbackQuery.Message.Chat.Id, botClient, cancellationToken);
-                Console.WriteLine($"{update.CallbackQuery.Message.Date} - {update.CallbackQuery.Message.Chat.Username} - Кнопка - {update.CallbackQuery.Data} - {userStateMachines[update.CallbackQuery.Message.Chat.Id].CurrentState.GetType()}");
-                await userStateMachines[update.CallbackQuery.Message.Chat.Id].CurrentState.HandleCallbackQuery(update.CallbackQuery);
+                Console.WriteLine(
+                    $"{update.CallbackQuery.Message.Date} - {update.CallbackQuery.Message.Chat.Username} - Кнопка - {update.CallbackQuery.Data} - {userStateMachines[update.CallbackQuery.Message.Chat.Id].CurrentState.GetType()}");
+                await userStateMachines[update.CallbackQuery.Message.Chat.Id].CurrentState
+                    .HandleCallbackQuery(update.CallbackQuery);
                 return;
         }
     }
-    
-    private Task HandlePollingErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
+
+    private Task HandlePollingErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken token)
     {
         var errorMessage = exception switch
         {
