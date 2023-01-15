@@ -9,8 +9,8 @@ namespace TelegramBot.StateMachine.States;
 
 public class StartState : BotState
 {
-    public StartState(ITelegramBotClient botClient, CancellationToken cancellationToken, StateMachine stateMachine) 
-        : base(botClient, cancellationToken, stateMachine) { }
+    public StartState(long userId, ITelegramBotClient botClient, CancellationToken cancellationToken, StateMachine stateMachine) 
+        : base(userId, botClient, cancellationToken, stateMachine) { }
     
     public override async Task HandleMessage(Message message)
     {
@@ -20,18 +20,18 @@ public class StartState : BotState
         
         switch (message.Text)
         {
-            case "/start":
-                CommandLists.StartCommands = CommandLists.StartCommands.Where(cmd => cmd is not StartCommand);
-                await TypeMessage(message, commandOutput, InlineKeyboards.StartKeyboard);
+            case "/start": 
+                //CommandLists.StartCommands = CommandLists.StartCommands.Where(cmd => cmd is not StartCommand);
+                await TypeMessage(commandOutput, InlineKeyboards.StartKeyboard);
                 return;
             
             case "/login":
-                stateMachine.ChangeState(new LoginState(botClient, cancellationToken, stateMachine));
-                await TypeMessage(message, commandOutput, InlineKeyboards.LoginKeyboard);
+                stateMachine.ChangeState(new LoginState(userId, botClient, cancellationToken, stateMachine));
+                await TypeMessage(commandOutput, InlineKeyboards.LoginKeyboard);
                 return;
             
             default:
-                await TypeMessage(message, commandOutput, InlineKeyboards.StartKeyboard);
+                await TypeMessage(commandOutput, InlineKeyboards.StartKeyboard);
                 return;
         }
     }
@@ -46,12 +46,12 @@ public class StartState : BotState
         switch (callbackQuery.Data)
         {
             case "/login":
-                await TypeMessage(message, commandOutput, InlineKeyboards.LoginKeyboard);
-                stateMachine.ChangeState(new LoginState(botClient, cancellationToken, stateMachine));
+                await TypeMessage(commandOutput, InlineKeyboards.LoginKeyboard);
+                stateMachine.ChangeState(new LoginState(userId, botClient, cancellationToken, stateMachine));
                 return;
             
             default:
-                await TypeMessage(message, commandOutput, InlineKeyboards.StartKeyboard);
+                await TypeMessage(commandOutput, InlineKeyboards.StartKeyboard);
                 return;
         }
     }
