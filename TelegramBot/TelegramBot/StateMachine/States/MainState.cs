@@ -9,8 +9,8 @@ namespace TelegramBot.StateMachine.States;
 
 public class MainState : BotState
 {
-    public MainState(ITelegramBotClient botClient, CancellationToken cancellationToken, StateMachine stateMachine) 
-        : base(botClient, cancellationToken, stateMachine) { }
+    public MainState(long userId, ITelegramBotClient botClient, CancellationToken cancellationToken, StateMachine stateMachine) 
+        : base(userId, botClient, cancellationToken, stateMachine) { }
 
     public override async Task HandleMessage(Message message)
     {
@@ -18,13 +18,13 @@ public class MainState : BotState
         
         if (text == null)
         {
-            await TypeMessage(message, "пиши текстом мужик", InlineKeyboards.MainKeyboard);
+            await TypeMessage("пиши текстом мужик", InlineKeyboards.MainKeyboard);
             return;
         }
 
         //Console.WriteLine($"{message.Date} - {message.Chat.Username} - {text}");
         var commandOutput = CommandParser.ParseCommand(CommandLists.MainCommands, text).Execute(message.Chat.Id);
-        await TypeMessage(message, commandOutput, InlineKeyboards.MainKeyboard);
+        await TypeMessage(commandOutput, InlineKeyboards.MainKeyboard);
     }
 
     public override async Task HandleCallbackQuery(CallbackQuery callbackQuery)
@@ -32,6 +32,6 @@ public class MainState : BotState
         var message = callbackQuery.Message;
         //Console.WriteLine($"{msg.Date} - {msg.Chat.Username} - Кнопка - {callbackQuery.Data}");
         var commandOutput = CommandParser.ParseCommand(CommandLists.MainCommands, callbackQuery.Data).Execute(message.Chat.Id);
-        await TypeMessage(message, commandOutput, InlineKeyboards.MainKeyboard);
+        await TypeMessage(commandOutput, InlineKeyboards.MainKeyboard);
     }
 }

@@ -9,9 +9,9 @@ public static class AddRepositoriesExtension
 {
     public static void AddRepositories(this IServiceCollection services, string? connectionString)
     {
-        services.AddTransient<DbContext, DataContext>();
+        services.AddScoped<DbContext, DataContext>();
         services.AddDbContext<DataContext>(options => 
-            options.UseNpgsql(connectionString, o => o.MigrationsAssembly("Dal")));
+            options.UseNpgsql(connectionString, o => o.MigrationsAssembly("Dal")), ServiceLifetime.Transient);
         services.AddTransient<IUserRepository, UserRepository>();
         services.AddTransient<IUserInfoRepository, UserInfoRepository>();
         services.AddTransient<IUserMarksRepository, UserMarksRepository>();

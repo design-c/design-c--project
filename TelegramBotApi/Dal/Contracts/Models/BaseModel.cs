@@ -6,6 +6,6 @@ namespace Dal.Contracts.Models;
 public class BaseModel<TType>
 {
     [Key]
-    [Column("Id")]
+    [Column("id")]
     public TType Id { get; set; } 
 }

@@ -2,7 +2,7 @@
 
 namespace Dal.Contracts.Models;
 
-public class UserInfoModel: BaseModel<int>
+public class UserInfoModel: UserIdModel
 {
     [Column("name")]
     public string Name { get; set; }

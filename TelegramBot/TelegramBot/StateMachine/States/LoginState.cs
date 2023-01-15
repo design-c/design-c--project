@@ -8,8 +8,8 @@ namespace TelegramBot.StateMachine.States;
 
 public class LoginState : BotState
 {
-    public LoginState(ITelegramBotClient botClient, CancellationToken cancellationToken, StateMachine stateMachine) 
-        : base(botClient, cancellationToken, stateMachine) { }
+    public LoginState(long userId, ITelegramBotClient botClient, CancellationToken cancellationToken, StateMachine stateMachine) 
+        : base(userId, botClient, cancellationToken, stateMachine) { }
     
     public override async Task HandleMessage(Message message)
     {
@@ -18,13 +18,13 @@ public class LoginState : BotState
         
         if (loginInfo.Length != 2)
         {
-            await TypeMessage(message, $"Неправильный формат логина и пароля.\nВведите в формате {StartLoginCommand.LoginFormat}", 
+            await TypeMessage($"Неправильный формат логина и пароля.\nВведите в формате {StartLoginCommand.LoginFormat}", 
                 InlineKeyboards.LoginKeyboard);
             return;
         }
 
-        await TypeMessage(message,new LoginCommand(loginInfo).Execute(userId), InlineKeyboards.LoginKeyboard);
-        stateMachine.ChangeState(new MainState(botClient, cancellationToken, stateMachine));
+        await TypeMessage(new LoginCommand(loginInfo).Execute(userId), InlineKeyboards.LoginKeyboard);
+        stateMachine.ChangeState(new MainState(userId, botClient, cancellationToken, stateMachine));
     }
 
     public override async Task HandleCallbackQuery(CallbackQuery callbackQuery)
