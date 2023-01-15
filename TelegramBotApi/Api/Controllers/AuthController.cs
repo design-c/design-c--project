@@ -19,22 +19,13 @@ public class AuthController : ControllerBase
     [HttpPost("/login")]
     public async Task<ActionResult> Login(LoginRequestCommand requestCommand)
     {
-        try
-        {
-            var response = await mediator.Send(requestCommand);
-
-            return Ok(response);
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.Message);
-        }
+        return await SendToMediator(requestCommand);
     }
 
-    [HttpGet("/logout")]
+    [Authorize, HttpGet("/logout")]
     public async Task<ActionResult> Logout()
     {
-        throw new NotImplementedException();
+        return await SendToMediator(new LogoutRequestCommand{ UserKey = User.Identity!.Name! });
     }
 
     [HttpGet("/check")]
@@ -42,5 +33,19 @@ public class AuthController : ControllerBase
     public async Task<ActionResult> Check()
     {
         throw new NotImplementedException();
+    }
+
+    private async Task<ActionResult> SendToMediator(IBaseRequest command)
+    {
+        try
+        {
+            var response = await mediator.Send(command);
+
+            return Ok(response);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
 }

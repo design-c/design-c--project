@@ -9,5 +9,11 @@ public class UserModel: BaseModel<int>
     [Column("password")]
     public string Password { get; set; }
     [Column("key")]
-    public string UserKey { get; set; } 
+    public string UserKey { get; set; }
+
+    public IEnumerable<UserMarksModel>? Marks { get; set; }
+    
+    public UserInfoModel? Info { get; set; }
+    
+    public UserScheduleModel? Schedule { get; set; }
 }
