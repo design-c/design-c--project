@@ -2,7 +2,7 @@
 
 namespace Dal.Contracts.Models;
 
-public class UserScheduleModel: BaseModel<int>
+public class UserScheduleModel: UserIdModel
 {
     [Column("updatedAt")]
     public DateTime UpdatedAt { get; set; }

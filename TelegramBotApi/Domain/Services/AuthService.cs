@@ -54,7 +54,7 @@ public class AuthService : IAuthService
             await userRepository.UpdateAsync(user);
         }
 
-        return GetToken(login);
+        return GetToken(userKey);
     }
 
     public async Task LoginByUserId(string userKey)
@@ -70,11 +70,17 @@ public class AuthService : IAuthService
             throw new Exception("Неправильный логин или пароль пользователя записан в базу данных");
     }
 
-    private JwtSecurityToken GetToken(string login)
+    public async Task Logout(string userKey)
+    {
+        var user = await userRepository.GetUserByKey(userKey); 
+        await userRepository.DeleteAsync(user!.Id);
+    }
+
+    private JwtSecurityToken GetToken(string userKey)
     {
         var tokenClaims = new List<Claim>
         {
-            new(ClaimTypes.Name, login),
+            new(ClaimTypes.Name, userKey),
         };
 
         return new JwtSecurityToken(
