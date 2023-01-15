@@ -56,6 +56,8 @@ builder.Services.Configure<AuthJwtSettings>(builder.Configuration.GetSection(Aut
 builder.Services.Configure<UrfuUserDataSettings>(builder.Configuration.GetSection(UrfuUserDataSettings.UrfuUser));
 builder.Services.AddLogicServices();
 builder.Services.AddRepositories(builder.Configuration.GetConnectionString("DB"));
+var connectionName = builder.Environment.IsDevelopment() ? "DB" : "DockerDB";
+builder.Services.AddRepositories(builder.Configuration.GetConnectionString(connectionName));
 
 var app = builder.Build();
 
