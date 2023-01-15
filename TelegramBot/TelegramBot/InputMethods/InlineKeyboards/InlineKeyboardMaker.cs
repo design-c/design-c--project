@@ -15,7 +15,7 @@ public static class InlineKeyboardMaker
     
     private static InlineKeyboardButton[] MakeInlineButton(ICommand command)
     {
-        var text = command.Description;//.Split(" - ")[1];
+        var text = command.Description;
         var callbackData = command.Command;
 
         var button = InlineKeyboardButton.WithCallbackData(text, callbackData);

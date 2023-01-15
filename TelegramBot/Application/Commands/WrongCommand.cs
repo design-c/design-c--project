@@ -18,6 +18,6 @@ public class WrongCommand : ICommand
     public string Execute(long userId)
     {
         return
-            $"Неопознанная команда \"{wrongText}\".\n";//Воспользуйтесь /help для получения списка всех доступных команд";
+            $"Неопознанная команда \"{wrongText}\".\n";
     }
 }
