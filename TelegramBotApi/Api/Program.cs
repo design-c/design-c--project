@@ -35,7 +35,6 @@ builder.Services.AddAuthentication(options =>
         {
             options.TokenValidationParameters = new TokenValidationParameters
             {
-                ValidateLifetime = true,
                 ValidateAudience = false,
                 ValidateIssuer = false,
                 IssuerSigningKey = authJwtSettings.SymmetricSecurityKey,

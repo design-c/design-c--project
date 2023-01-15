@@ -1,6 +1,5 @@
 ﻿using Application.Requests.Auth;
 using MediatR;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,14 +26,7 @@ public class AuthController : ControllerBase
     {
         return await SendToMediator(new LogoutRequestCommand{ UserKey = User.Identity!.Name! });
     }
-
-    [HttpGet("/check")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public async Task<ActionResult> Check()
-    {
-        throw new NotImplementedException();
-    }
-
+    
     private async Task<ActionResult> SendToMediator(IBaseRequest command)
     {
         try
