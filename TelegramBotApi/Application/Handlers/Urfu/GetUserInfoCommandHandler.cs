@@ -16,7 +16,7 @@ public class GetUserInfoCommandHandler : IRequestHandler<GetUserInfoRequestComma
 
     public async Task<UserInfo> Handle(GetUserInfoRequestCommand request, CancellationToken cancellationToken)
     {
-        var userInfo = await userDataService.GetUserInfo(request.UserKey);
+        var userInfo = await userDataService.GetUserInfo(request.UserKey, request.NeedUpdate);
 
         return userInfo;
     }

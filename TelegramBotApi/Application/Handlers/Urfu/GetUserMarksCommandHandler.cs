@@ -17,7 +17,7 @@ public class GetUserMarksCommandHandler : IRequestHandler<GetUserMarksRequestCom
 
     public async Task<IEnumerable<UserMark>> Handle(GetUserMarksRequestCommand request, CancellationToken cancellationToken)
     {
-        var userMarks = await userDataService.GetUserMarks(request.UserKey);
+        var userMarks = await userDataService.GetUserMarks(request.UserKey, request.NeedUpdate);
 
         return userMarks;
     }
