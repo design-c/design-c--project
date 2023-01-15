@@ -25,7 +25,7 @@ public class AuthController : ControllerBase
     [Authorize, HttpGet("/logout")]
     public async Task<ActionResult> Logout()
     {
-        return await SendToMediator(new LogoutRequestCommand{ UserKey = User.Identity?.Name ?? ""});
+        return await SendToMediator(new LogoutRequestCommand{ UserKey = User.Identity!.Name! });
     }
 
     [HttpGet("/check")]

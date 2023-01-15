@@ -21,12 +21,12 @@ public class UrfuController : ControllerBase
     [Authorize, HttpGet("info")]
     public async Task<ActionResult> GetUserInfo()
     {
-        return Ok(await mediator.Send(new GetUserInfoRequestCommand { UserKey = User.Identity?.Name ?? "" }));
+        return Ok(await mediator.Send(new GetUserInfoRequestCommand { UserKey = User.Identity!.Name! }));
     }
 
     [Authorize, HttpGet("marks")]
     public async Task<ActionResult> GetUserMarks()
     {
-        return Ok(await mediator.Send(new GetUserMarksRequestCommand { UserKey = User.Identity?.Name ?? "" }));
+        return Ok(await mediator.Send(new GetUserMarksRequestCommand { UserKey = User.Identity!.Name! }));
     }
 }
