@@ -16,7 +16,6 @@ public class Bot : IBot
     private readonly CancellationTokenSource cts;
     private readonly ReceiverOptions receiverOptions;
 
-    //private StateMachine.StateMachine stateMachine;
     private ConcurrentDictionary<long, StateMachine.StateMachine> userStateMachines;
     
     public Bot(BotSettings botSettings)
@@ -25,8 +24,6 @@ public class Bot : IBot
         cts = new CancellationTokenSource();
         receiverOptions = new ReceiverOptions { AllowedUpdates = Array.Empty<UpdateType>() };
         userStateMachines = new ConcurrentDictionary<long, StateMachine.StateMachine>();
-        //stateMachine = new StateMachine.StateMachine();
-        //stateMachine.ChangeState(new StartState(client, cts.Token, stateMachine));
         client.StartReceiving(HandleUpdateAsync, HandlePollingErrorAsync, receiverOptions, cts.Token);
     }
 
@@ -72,7 +69,6 @@ public class Bot : IBot
         {
             userStateMachines.TryAdd(userId, new StateMachine.StateMachine(userId, botClient, cancellationToken));
             Console.WriteLine($"{userId} - {userStateMachines[userId].CurrentState.GetType()}");
-            //userStateMachines[userId].ChangeState(new StartState(botClient, cancellationToken, userStateMachines[userId]));
         }
     }
 }

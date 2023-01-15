@@ -22,7 +22,6 @@ public class MainState : BotState
             return;
         }
 
-        //Console.WriteLine($"{message.Date} - {message.Chat.Username} - {text}");
         var commandOutput = CommandParser.ParseCommand(CommandLists.MainCommands, text).Execute(message.Chat.Id);
         await TypeMessage(commandOutput, InlineKeyboards.MainKeyboard);
     }
@@ -30,7 +29,6 @@ public class MainState : BotState
     public override async Task HandleCallbackQuery(CallbackQuery callbackQuery)
     {
         var message = callbackQuery.Message;
-        //Console.WriteLine($"{msg.Date} - {msg.Chat.Username} - Кнопка - {callbackQuery.Data}");
         var commandOutput = CommandParser.ParseCommand(CommandLists.MainCommands, callbackQuery.Data).Execute(message.Chat.Id);
         await TypeMessage(commandOutput, InlineKeyboards.MainKeyboard);
     }

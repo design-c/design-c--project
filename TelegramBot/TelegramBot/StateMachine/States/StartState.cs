@@ -20,8 +20,7 @@ public class StartState : BotState
         
         switch (message.Text)
         {
-            case "/start": 
-                //CommandLists.StartCommands = CommandLists.StartCommands.Where(cmd => cmd is not StartCommand);
+            case "/start":
                 await TypeMessage(commandOutput, InlineKeyboards.StartKeyboard);
                 return;
             
