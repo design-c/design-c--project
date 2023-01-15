@@ -1,6 +1,5 @@
 ﻿using Application.Requests.Auth;
 using MediatR;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,9 +18,20 @@ public class AuthController : ControllerBase
     [HttpPost("/login")]
     public async Task<ActionResult> Login(LoginRequestCommand requestCommand)
     {
+        return await SendToMediator(requestCommand);
+    }
+
+    [Authorize, HttpGet("/logout")]
+    public async Task<ActionResult> Logout()
+    {
+        return await SendToMediator(new LogoutRequestCommand{ UserKey = User.Identity!.Name! });
+    }
+    
+    private async Task<ActionResult> SendToMediator(IBaseRequest command)
+    {
         try
         {
-            var response = await mediator.Send(requestCommand);
+            var response = await mediator.Send(command);
 
             return Ok(response);
         }
@@ -29,18 +39,5 @@ public class AuthController : ControllerBase
         {
             return BadRequest(e.Message);
         }
-    }
-
-    [HttpGet("/logout")]
-    public async Task<ActionResult> Logout()
-    {
-        throw new NotImplementedException();
-    }
-
-    [HttpGet("/check")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public async Task<ActionResult> Check()
-    {
-        throw new NotImplementedException();
     }
 }

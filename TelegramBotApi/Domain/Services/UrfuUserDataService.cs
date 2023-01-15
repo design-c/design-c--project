@@ -7,42 +7,55 @@ namespace Logic.Services;
 
 public class UrfuUserDataService: IUserDataService
 {
-    
     private readonly IUrfuUserServerDataService userServerDataService;
-    private readonly IUserInfoRepository userInfoRepository;
     private readonly IUserRepository userRepository;
 
     public UrfuUserDataService(
-        IUrfuUserServerDataService userServerDataService, 
-        IUserInfoRepository userInfoRepository,
+        IUrfuUserServerDataService userServerDataService,
         IUserRepository userRepository)
     {
         this.userServerDataService = userServerDataService;
-        this.userInfoRepository = userInfoRepository;
         this.userRepository = userRepository;
     }
     
-    public async Task<UserInfo> GetUserInfo(string userKey)
+    public async Task<UserInfo> GetUserInfo(string userKey, bool needUpdate)
     {
-        var user = await userRepository.GetUserByKey(userKey);
-        var userinfo = await userInfoRepository.FindAsync(user.Id);
-        if (userinfo != null)
-            return new UserInfo(userinfo.Name, userinfo.Group, userinfo.StudentCardNumber, userinfo.Email);
+        var user = (await userRepository.GetUserByKeyWithInfo(userKey))!;
+
+        if (user.Info != null && !needUpdate)
+            return new UserInfo(user.Info.Name, user.Info.Group, user.Info.StudentCardNumber, user.Info.Email);
 
         var userinfoFromSever = await userServerDataService.GetUserInfo(userKey);
-        await userInfoRepository.CreateAsync(new UserInfoModel
+        user.Info = new UserInfoModel
         {
             Email = userinfoFromSever.Email,
             Group = userinfoFromSever.Group,
             StudentCardNumber = userinfoFromSever.StudentCardNumber,
-            Name = userinfoFromSever.Name
-        });
+            Name = userinfoFromSever.Name,
+            UserModelId = user.Id
+        };
+        await userRepository.UpdateAsync(user);
         
         return userinfoFromSever;
     }
 
-    public async Task<IEnumerable<UserMark>> GetUserMarks(string userKey)
+    public async Task<IEnumerable<UserMark>> GetUserMarks(string userKey, bool needUpdate)
     {
-        return await userServerDataService.GetUserMarks(userKey);
+        var user = (await userRepository.GetUserByKeyWithMarks(userKey))!;
+        var userMarks = user.Marks!.ToArray();
+        if (userMarks.Length > 0 && !needUpdate)
+            return userMarks.Select(m => new UserMark(m.Name, m.Point, m.Mark));
+
+        var userMarksFromSever = (await userServerDataService.GetUserMarks(userKey)).ToArray();
+        user.Marks = userMarksFromSever.Select(m => new UserMarksModel
+        {
+            Name = m.Name,
+            UserModelId = user.Id,
+            Point = m.Point,
+            Mark = m.Mark
+        }).ToList();
+        await userRepository.UpdateAsync(user);
+        
+        return userMarksFromSever;
     }
 }

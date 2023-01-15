@@ -18,15 +18,23 @@ public class UrfuController : ControllerBase
         this.mediator = mediator;
     }
 
-    [HttpGet("info/{userKey}")]
-    public async Task<ActionResult> GetUserInfo(string userKey)
+    [Authorize, HttpGet("info")]
+    public async Task<ActionResult> GetUserInfo([FromQuery] bool needUpdate = false)
     {
-        return Ok(await mediator.Send(new GetUserInfoRequestCommand { UserKey = userKey }));
+        return Ok(await mediator.Send(new GetUserInfoRequestCommand
+        {
+            UserKey = User.Identity!.Name!,
+            NeedUpdate = needUpdate
+        }));
     }
 
-    [HttpGet("marks/{userKey}")]
-    public async Task<ActionResult> GetUserMarks(string userKey)
+    [Authorize, HttpGet("marks")]
+    public async Task<ActionResult> GetUserMarks([FromQuery] bool needUpdate = false)
     {
-        return Ok(await mediator.Send(new GetUserMarksRequestCommand { UserKey = userKey }));
+        return Ok(await mediator.Send(new GetUserMarksRequestCommand
+        {
+            UserKey = User.Identity!.Name!,
+            NeedUpdate = needUpdate
+        }));
     }
 }
