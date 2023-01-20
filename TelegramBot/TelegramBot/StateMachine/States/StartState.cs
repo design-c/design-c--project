@@ -14,9 +14,15 @@ public class StartState : BotState
     
     public override async Task HandleMessage(Message message)
     {
+        if (message.Text == null)
+        {
+            await TypeMessage("Можно выполнять только текстовые команды и кнопки", InlineKeyboards.StartKeyboard);
+            return;
+        }
+        
         var commandOutput = CommandParser
             .ParseCommand(CommandLists.StartCommands, message.Text)
-            .Execute(message.Chat.Id);
+            .Execute(userId);
         
         switch (message.Text)
         {
@@ -37,10 +43,9 @@ public class StartState : BotState
 
     public override async Task HandleCallbackQuery(CallbackQuery callbackQuery)
     {
-        var message = callbackQuery.Message;
         var commandOutput = CommandParser
             .ParseCommand(CommandLists.StartCommands, callbackQuery.Data)
-            .Execute(message.Chat.Id);
+            .Execute(userId);
         
         switch (callbackQuery.Data)
         {

@@ -14,22 +14,19 @@ public class MainState : BotState
 
     public override async Task HandleMessage(Message message)
     {
-        var text = message.Text;
-        
-        if (text == null)
+        if (message.Text == null)
         {
-            await TypeMessage("Можно выполнять только текстовые команды и кнопки.", InlineKeyboards.MainKeyboard);
+            await TypeMessage("Можно выполнять только текстовые команды и кнопки", InlineKeyboards.MainKeyboard);
             return;
         }
 
-        var commandOutput = CommandParser.ParseCommand(CommandLists.MainCommands, text).Execute(message.Chat.Id);
+        var commandOutput = CommandParser.ParseCommand(CommandLists.MainCommands, message.Text).Execute(userId);
         await TypeMessage(commandOutput, InlineKeyboards.MainKeyboard);
     }
 
     public override async Task HandleCallbackQuery(CallbackQuery callbackQuery)
     {
-        var message = callbackQuery.Message;
-        var commandOutput = CommandParser.ParseCommand(CommandLists.MainCommands, callbackQuery.Data).Execute(message.Chat.Id);
+        var commandOutput = CommandParser.ParseCommand(CommandLists.MainCommands, callbackQuery.Data).Execute(userId);
         await TypeMessage(commandOutput, InlineKeyboards.MainKeyboard);
     }
 }

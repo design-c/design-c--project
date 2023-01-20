@@ -10,46 +10,60 @@ namespace TelegramBot.Bot;
 
 public class Bot : IBot
 {
-    private readonly CancellationTokenSource cancellationToken;
+    private readonly CancellationTokenSource cancelTokenSource;
 
-    private ConcurrentDictionary<long, StateMachine.StateMachine> userStateMachines;
+    private readonly ConcurrentDictionary<long, StateMachine.StateMachine> userStateMachines;
 
     public Bot(
         TelegramBotClient client,
-        CancellationTokenSource cancellationToken,
+        CancellationTokenSource cancelTokenSource,
         ReceiverOptions receiverOptions
     )
     {
-        this.cancellationToken = cancellationToken;
+        this.cancelTokenSource = cancelTokenSource;
         userStateMachines = new ConcurrentDictionary<long, StateMachine.StateMachine>();
-        client.StartReceiving(HandleUpdateAsync, HandlePollingErrorAsync, receiverOptions, cancellationToken.Token);
+        client.StartReceiving(HandleUpdateAsync, HandlePollingErrorAsync, receiverOptions, cancelTokenSource.Token);
     }
 
-    public void StopBot() => cancellationToken.Cancel();
+    public void StopBot() => cancelTokenSource.Cancel();
 
     private async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update,
-        CancellationToken cancellationToken)
+        CancellationToken cancelToken)
     {
         switch (update)
         {
-            case { Type: UpdateType.Message, Message: { } }:
-                CheckUser(update.Message.Chat.Id, botClient, cancellationToken);
+            case { Type: UpdateType.Message, Message: { } message }:
+                var messageUserId = message.Chat.Id;
+                CheckUser(messageUserId, botClient, cancelToken);
+                
                 Console.WriteLine(
-                    $"{update.Message.Date} - {update.Message.Chat.Username} - {update.Message.Text} - {userStateMachines[update.Message.Chat.Id].CurrentState.GetType()}");
-                await userStateMachines[update.Message.Chat.Id].CurrentState.HandleMessage(update.Message);
+                    $"{message.Date} - {message.Chat.Username} - {message.Text} - {userStateMachines[messageUserId].CurrentState.GetType()}");
+                
+                await userStateMachines[messageUserId].CurrentState.HandleMessage(message);
                 return;
 
-            case { Type: UpdateType.CallbackQuery, CallbackQuery: { }, CallbackQuery.Message: { } }:
-                CheckUser(update.CallbackQuery.Message.Chat.Id, botClient, cancellationToken);
+            case
+            {
+                Type: UpdateType.CallbackQuery, 
+                CallbackQuery: { } query, 
+                CallbackQuery.Message: { } message,
+                CallbackQuery.Data: { } queryData
+            }:
+                var queryUserId = message.Chat.Id;
+                CheckUser(queryUserId, botClient, cancelToken);
+                
                 Console.WriteLine(
-                    $"{update.CallbackQuery.Message.Date} - {update.CallbackQuery.Message.Chat.Username} - Кнопка - {update.CallbackQuery.Data} - {userStateMachines[update.CallbackQuery.Message.Chat.Id].CurrentState.GetType()}");
-                await userStateMachines[update.CallbackQuery.Message.Chat.Id].CurrentState
-                    .HandleCallbackQuery(update.CallbackQuery);
+                    $"{message.Date} - {message.Chat.Username} - Кнопка - {queryData} - {userStateMachines[queryUserId].CurrentState.GetType()}");
+                
+                await userStateMachines[queryUserId].CurrentState.HandleCallbackQuery(query);
+                return;
+            
+            default:
                 return;
         }
     }
 
-    private Task HandlePollingErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken token)
+    private Task HandlePollingErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancelToken)
     {
         var errorMessage = exception switch
         {
@@ -62,12 +76,9 @@ public class Bot : IBot
         return Task.CompletedTask;
     }
 
-    private void CheckUser(long userId, ITelegramBotClient botClient, CancellationToken cancellationToken)
+    private void CheckUser(long userId, ITelegramBotClient botClient, CancellationToken cancelToken)
     {
         if (!userStateMachines.ContainsKey(userId))
-        {
-            userStateMachines.TryAdd(userId, new StateMachine.StateMachine(userId, botClient, cancellationToken));
-            Console.WriteLine($"{userId} - {userStateMachines[userId].CurrentState.GetType()}");
-        }
+            userStateMachines.TryAdd(userId, new StateMachine.StateMachine(userId, botClient, cancelToken));
     }
 }

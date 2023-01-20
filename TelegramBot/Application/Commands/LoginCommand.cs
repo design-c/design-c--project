@@ -22,6 +22,6 @@ public class LoginCommand : ICommand
     {
         LoginRequest.LoginUser(loginInfo, userId);
         
-        return "Успешный вход\nДля получения списка команд, воспользуйтесь командой /help";
+        return "Успешный вход!\nДля получения списка команд, воспользуйтесь командой /help";
     }
 }
