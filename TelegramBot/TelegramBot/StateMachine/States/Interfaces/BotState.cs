@@ -6,10 +6,10 @@ namespace TelegramBot.StateMachine.States.Interfaces;
 
 public abstract class BotState
 {
-    protected long userId;
-    protected ITelegramBotClient botClient;
-    protected CancellationToken cancellationToken;
-    protected StateMachine stateMachine;
+    protected readonly long userId;
+    protected readonly ITelegramBotClient botClient;
+    protected readonly CancellationToken cancellationToken;
+    protected readonly StateMachine stateMachine;
 
     protected BotState(long userId, ITelegramBotClient botClient, CancellationToken cancellationToken, StateMachine stateMachine)
     {

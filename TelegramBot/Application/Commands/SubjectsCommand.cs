@@ -16,10 +16,10 @@ public class SubjectsCommand : ICommand
         var token = UserRepository.GetUserToken(userId);
         var subjects = SubjectsRequest.GetSubjects(userId);
 
-        var builder = new StringBuilder();
+        var msg = new StringBuilder();
         foreach (var subject in subjects)
-            builder.Append($"{subject.Name} - {subject.Grade}\n");
+            msg.Append($"{subject.Name} - {subject.Grade}\n");
         
-        return builder.ToString();
+        return msg.ToString();
     }
 }

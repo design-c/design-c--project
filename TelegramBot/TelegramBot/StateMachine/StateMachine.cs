@@ -23,5 +23,8 @@ public class StateMachine
         CurrentState = currentState;
     }
 
-    public void ChangeState(BotState state) => CurrentState = state;
+    public void ChangeState(BotState state)
+    {
+        CurrentState = state;
+    }
 }

@@ -13,8 +13,13 @@ public class LoginState : BotState
     
     public override async Task HandleMessage(Message message)
     {
+        if (message.Text == null)
+        {
+            await TypeMessage("Можно выполнять только текстовые команды и кнопки", InlineKeyboards.LoginKeyboard);
+            return;
+        }
+        
         var loginInfo = message.Text.Split(StartLoginCommand.LoginInfoSeparator);
-        var userId = message.Chat.Id;
         
         if (loginInfo.Length != 2)
         {
@@ -27,8 +32,5 @@ public class LoginState : BotState
         stateMachine.ChangeState(new MainState(userId, botClient, cancellationToken, stateMachine));
     }
 
-    public override async Task HandleCallbackQuery(CallbackQuery callbackQuery)
-    {
-        return;
-    }
+    public override async Task HandleCallbackQuery(CallbackQuery callbackQuery) { }
 }
