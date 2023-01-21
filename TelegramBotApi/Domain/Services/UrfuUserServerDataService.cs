@@ -37,16 +37,16 @@ public class UrfuUserServerDataService : IUrfuUserServerDataService
         await authService.LoginByUserId(userKey);
 
         var document = await GetDocumentByUri(urfuUserDataSettings.UserInfoUri);
-        const string userInfoClassName = "div.myself";
+        const string userInfoClassName = "div.student-data";
 
         var data = document.QuerySelector(userInfoClassName)!
             .GetClearContentElementData()
             .ToArray();
 
         var name = data[0];
-        var studentCardNumber = data[2];
-        var group = data[4];
-        var email = data.LastOrDefault()?.Split(':')[1].Trim() ?? "email отсутствует";
+        var studentCardNumber = data[1].Split(':')[1].Trim();
+        var group = data[3];
+        var email = data[4].Split(':')[1].Trim();
 
         return new UserInfo(name, group, studentCardNumber, email);
     }
