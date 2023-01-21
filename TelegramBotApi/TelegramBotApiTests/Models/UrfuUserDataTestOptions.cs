@@ -1,7 +1,7 @@
 ﻿using Logic.Settings;
 using Microsoft.Extensions.Options;
 
-namespace TelegramBotApiTests.Settings;
+namespace TelegramBotApiTests.Models;
 
 public class UrfuUserDataTestOptions : IOptions<UrfuUserDataSettings>
 {

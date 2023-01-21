@@ -1,6 +1,6 @@
 ﻿using Logic.Settings;
 using Microsoft.Extensions.Configuration;
-using TelegramBotApiTests.Settings;
+using TelegramBotApiTests.Models;
 
 namespace TelegramBotApiTests.Utils;
 

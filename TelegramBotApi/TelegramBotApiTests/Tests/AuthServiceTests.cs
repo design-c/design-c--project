@@ -4,7 +4,6 @@ using FluentAssertions;
 using Logic.Services;
 using Logic.Settings;
 using TelegramBotApiTests.Models;
-using TelegramBotApiTests.Settings;
 using TelegramBotApiTests.Utils;
 
 namespace TelegramBotApiTests.Tests;

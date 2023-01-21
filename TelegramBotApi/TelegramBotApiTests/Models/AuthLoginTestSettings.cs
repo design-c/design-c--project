@@ -1,6 +1,4 @@
-﻿using TelegramBotApiTests.Models;
-
-namespace TelegramBotApiTests.Settings;
+﻿namespace TelegramBotApiTests.Models;
 
 public class AuthLoginTestSettings
 {
