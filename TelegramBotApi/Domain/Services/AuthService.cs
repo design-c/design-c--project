@@ -72,8 +72,23 @@ public class AuthService : IAuthService
 
     public async Task Logout(string userKey)
     {
-        var user = await userRepository.GetUserByKey(userKey); 
-        await userRepository.DeleteAsync(user!.Id);
+        var user = await userRepository.GetUserByKey(userKey);
+        
+        if (user == null)
+            throw new Exception("Invalid user key");
+        
+        await userRepository.DeleteAsync(user.Id);
+    }
+
+    public async Task<bool> IsPasswordAndLoginCorrect(string login, string password)
+    {
+        var request = authUrfuSettings.AuthUri
+            .GenerateHttpRequestMessage(HttpMethod.Post)
+            .AddLoginContent(login, password);
+        var authResponse = await client.SendAsync(request).ConfigureAwait(false);
+        authResponse.EnsureSuccessStatusCode();
+
+        return authResponse.RequestMessage?.RequestUri?.Query.Contains("ok") ?? false;
     }
 
     private JwtSecurityToken GetToken(string userKey)
@@ -88,16 +103,5 @@ public class AuthService : IAuthService
             expires: DateTime.Now.AddMinutes(authJwtSettings.TokenExpireMinute),
             signingCredentials: new SigningCredentials(authJwtSettings.SymmetricSecurityKey, SecurityAlgorithms.HmacSha256)
         );
-    }
-
-    private async Task<bool> IsPasswordAndLoginCorrect(string login, string password)
-    {
-        var request = authUrfuSettings.AuthUri
-            .GenerateHttpRequestMessage(HttpMethod.Post)
-            .AddLoginContent(login, password);
-        var authResponse = await client.SendAsync(request).ConfigureAwait(false);
-        authResponse.EnsureSuccessStatusCode();
-
-        return authResponse.RequestMessage?.RequestUri?.Query.Contains("ok") ?? false;
     }
 }
