@@ -9,7 +9,7 @@ on:
 jobs:
   build:
 
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
@@ -17,6 +17,8 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.x
+    - name: SSL
+      run: export GITHUB_ACTIONS_RUNNER_TLS_NO_VERIFY=1
     - name: Install dependencies
       run: cd TelegramBotApi && dotnet restore
     - name: Build
