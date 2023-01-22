@@ -67,6 +67,10 @@
 + #### Реализован DDD
 + #### Упакован в докер
 
+## Структура telegram bot:
+
+![alt text](https://s227vla.storage.yandex.net/rdisk/3153c88083468ea02434aaaf2a8207bf6e7839cce1707c332b0132795735d8cb/63cd9523/hntZ55Q4-qFu2_wYkKmAL2q9wJRmUKkm4urRMyBd15-47TIZ-mQxti-mWkqTMmbNwgCpD34k6CwgWUtYVSIExQ==?uid=309542642&filename=telegram%20bot%20structure.png&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=309542642&fsize=16529&hid=3254a7cccbb69c99f3320c964f6bf576&media_type=image&tknv=v2&etag=da0aefe7e771464ae1082f2a3bc9bd36&rtoken=t85f6314SMbG&force_default=yes&ycrid=na-17d4f52d864af0f8c455b1325e1998a7-downloader18e&ts=5f2dfb0e54ec0&s=c8bf80518c7684b78efb17777248e37ee29208dcea031dcc612381fa8e0c63c8&pb=U2FsdGVkX19uLSGad27Ed280cg1rxABv61w24Iiw1lA2eSaFdtf2ZXN456FUHp5dIam4rMUuVm7teKNSNksiRGjVlbpV-s5TF4wI2OlgUT4)
+
 ## Точки расширение telegram bot:
 
 + #### Добавление новых команд бота
