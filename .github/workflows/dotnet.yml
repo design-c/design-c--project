@@ -17,11 +17,9 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.x
-    - name: Change dir
-      run: cd ./TelegramBotApi
-    - name: Restore dependencies
-      run: dotnet restore
+    - name: Install dependencies
+      run: cd TelegramBotApi && dotnet restore
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build --configuration Release --no-restore
     - name: Test
-      run: dotnet test --no-restore --no-build
+      run: dotnet test --no-restore --verbosity normal
