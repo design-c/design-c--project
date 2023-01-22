@@ -6,9 +6,6 @@ on:
   pull_request:
     branches: [ "main" ]
 
-env:
-  SSL_CERT_DIR: /dev/null 
-
 jobs:
   build:
 
@@ -20,9 +17,9 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.x
-    - name: Install dependencies
-      run: cd TelegramBotApi && dotnet restore
+      - name: Install dependencies
+        run: cd TelegramBotApi && dotnet restore
     - name: Build
       run: cd TelegramBotApi && dotnet build --configuration Release --no-restore
     - name: Test
-      run: cd TelegramBotApi && dotnet test --no-restore --verbosity normal
+      run: cd TelegramBotApi && dotnet dev-certs https --trust && dotnet test --no-restore --verbosity normal
