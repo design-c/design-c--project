@@ -23,4 +23,4 @@ jobs:
     - name: Install dependencies
       run: cd TelegramBotApi && dotnet restore
     - name: Test
-      run: cd TelegramBotApi && dotnet test 
+      run: cd TelegramBotApi && dotnet dev-certs https --trust && dotnet test 
