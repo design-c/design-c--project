@@ -14,8 +14,13 @@ public static class AddDomainServices
             .AddTransient<IAuthService, AuthService>()
             .AddTransient<IUrfuUserServerDataService, UrfuUserServerDataService>()
             .AddTransient<IUserDataService, UrfuUserDataService>();
-
-        services.TryAddScoped<HttpClient>();
+        services.AddHttpClient<HttpClient>()
+            .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler()
+            {
+                ClientCertificateOptions = ClientCertificateOption.Manual,
+                ServerCertificateCustomValidationCallback =
+                    (httpRequestMessage, cert, cetChain, policyErrors) => true
+            });
         services.TryAddScoped<WebClient>();
         services.TryAddScoped<HtmlParser>();
     }
