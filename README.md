@@ -20,11 +20,11 @@
 + #### В Api добавили авторизованную зону(нельзя отправлять запросы без приложенного jwt token-а) + добавили в свагер авторизацию bearer jwt
 + #### Написаны тесты на сервисы, которые мы используем в Domain
 
-## Структура проекта
+## Структура Api:
 
 ![alt text](https://s271vlx.storage.yandex.net/rdisk/024f2d299a5ea37ad77cbe75c36753db9d47dc37d2b0c66243a9b8be0f3c390d/63cd8dd9/hntZ55Q4-qFu2_wYkKmALwXJolQxowxtE9kmexzmQ7oW0je3H_DAzWAs9AjDsyxtUcwSK90miGHfLQOy_IHstA==?uid=309542642&filename=api%20structure.png&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=309542642&fsize=16944&hid=9b33ed419c94d3771398d8a28867170a&media_type=image&tknv=v2&etag=87d70bbc29666d06166f565f777966c6&rtoken=v9aXsTi0dEoY&force_default=yes&ycrid=na-ed1cdffaf6d332fb82fb9b9e896fd56a-downloader24h&ts=5f2df41ac6840&s=3faaf4fcc6350b9de4915ad2d280b8449dd083d658e3efee10121ad93c6478c8&pb=U2FsdGVkX19Ets8Dm0PeNdZ_gKqD5m40uCHp1Nn963aTAlsgDt62_HpyRgdSDgG7-QYNIgaNO0V2Ak_2dOL_xohyh9xry-Njq4FwYQCbZ1Q)
 
-## Тесты в проекте
+## Тесты в Api:
 
 ![alt text](https://s521sas.storage.yandex.net/rdisk/2c942665d3e2823bfbe9cc6b58d482c75a2720d61ac11a99d78b76651cc1c0e4/63cd8de9/hntZ55Q4-qFu2_wYkKmAL8kfDVaET8xrktlS01m9wo7kRh2CSdIr0iA7WJzricYn3YPE8h3vtyj0K3LBI6SW3A==?uid=309542642&filename=api%20tests.png&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=309542642&fsize=30060&hid=7035789f04f6f99b9b73adcdcc7535aa&media_type=image&tknv=v2&etag=ad5d4584ae31b442c58b2a5df227df97&rtoken=B5BPUX0yvkA5&force_default=yes&ycrid=na-d1aaa389497d2907f432455df44a6d3a-downloader24h&ts=5f2df42a08c40&s=923a540e8650591c0e780e1addd85994596b0635ea22a175913e6230261849ed&pb=U2FsdGVkX18txESuHgeXxL1deXvblXJKoDyXqn-e3ud9KHgyYYTDfCJbpHgO-WdltVtSWAoYogCYPHhnZWe4wiimt5BjGoYT0FC45aYEod4)
 
