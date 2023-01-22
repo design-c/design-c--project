@@ -7,8 +7,7 @@ on:
     branches: [ "main" ]
     
 env:
-   name: SSL_CERT_DIR
-   value: "/etc/ssl/certs"
+   SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION: true
 
 jobs:
   build:
