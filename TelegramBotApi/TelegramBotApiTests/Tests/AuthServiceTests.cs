@@ -154,7 +154,6 @@ public class AuthServiceTests
         userTestRepository,
         new HttpClient(new HttpClientHandler()
         {
-            ClientCertificateOptions = ClientCertificateOption.Manual,
             SslProtocols = SslProtocols.Tls12 | SslProtocols.Tls11 | SslProtocols.Tls,
             ServerCertificateCustomValidationCallback = (httpRequestMessage, cert, cetChain, policyErrors) => true
         }) 
