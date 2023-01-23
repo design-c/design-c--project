@@ -20,7 +20,5 @@ jobs:
       run: cd TelegramBotApi && dotnet restore
     - name: Build
       run: cd TelegramBotApi && dotnet build --configuration Release --no-restore
-    - name: Ssl
-      run: SSL_CTX_set_options(ssl_ctx, SSL_OP_LEGACY_SERVER_CONNECT);
     - name: Test
       run: cd TelegramBotApi && dotnet test --no-restore --verbosity normal
