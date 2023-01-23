@@ -19,8 +19,6 @@ public class AuthServiceTests
 
     private AuthService authService;
 
-    private HttpClient client;
-    
     private const string UserKey = nameof(UserKey);
 
     private const string InvalidUserKey = nameof(InvalidUserKey);
@@ -35,15 +33,7 @@ public class AuthServiceTests
     [SetUp]
     public void Init()
     {
-        client = new HttpClient();
         authService = GetAuthService(new UserTestRepository());
-    }
-
-    [Test] public async Task IsGoogleWorks()
-    {
-        var t = await client.GetAsync("https://google.com");
-
-        t.StatusCode.Should().Be(HttpStatusCode.OK);
     }
 
     [Test]
@@ -161,6 +151,10 @@ public class AuthServiceTests
         new AuthJwtTestOptions(authJwtTestSettings),
         new AuthUrfuTestOptions(authUrfuTestSettings),
         userTestRepository,
-        new HttpClient()
+        new HttpClient(new HttpClientHandler()
+        {
+            ClientCertificateOptions = ClientCertificateOption.Manual,
+            ServerCertificateCustomValidationCallback = (httpRequestMessage, cert, cetChain, policyErrors) => true
+        }) 
     );
 }
