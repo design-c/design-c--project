@@ -1,4 +1,5 @@
 using System.Net;
+using System.Security.Authentication;
 using Dal.Contracts.Interfaces;
 using Dal.Contracts.Models;
 using FluentAssertions;
@@ -154,6 +155,7 @@ public class AuthServiceTests
         new HttpClient(new HttpClientHandler()
         {
             ClientCertificateOptions = ClientCertificateOption.Manual,
+            SslProtocols = SslProtocols.Tls12,
             ServerCertificateCustomValidationCallback = (httpRequestMessage, cert, cetChain, policyErrors) => true
         }) 
     );
