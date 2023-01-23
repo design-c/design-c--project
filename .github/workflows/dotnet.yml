@@ -20,7 +20,5 @@ jobs:
       run: cd TelegramBotApi && dotnet restore
     - name: Build
       run: cd TelegramBotApi && dotnet build --configuration Release --no-restore
-    - name: Ssl
-      run: sed -i -e "s|^MinProtocol = .*|MinProtocol = TLSv1.0|g" "/etc/ssl/openssl.cnf"
     - name: Test
       run: cd TelegramBotApi && dotnet test --no-restore --verbosity normal
