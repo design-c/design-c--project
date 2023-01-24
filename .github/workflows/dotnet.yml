@@ -20,9 +20,9 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Sert
-      run: sudo echo -e "openssl_conf = openssl_init\n[openssl_init]\nssl_conf = ssl_sect\n[ssl_sect]\nsystem_default = system_default_sect\n[system_default_sect]\nOptions = UnsafeLegacyRenegotiation" > ./ssl.cnf
+      run: sudo echo -e "openssl_conf = openssl_init\n[openssl_init]\nssl_conf = ssl_sect\n[ssl_sect]\nsystem_default = system_default_sect\n[system_default_sect]\nOptions = UnsafeLegacyRenegotiation" > /ssl.cnf
     - name: add env
-      run: sudo echo "OPENSSL_CONF=./ssl.cnf" > .env
+      run: echo "::set-env name=OPENSSL_CONF::/ssl.cnf"
     - name: Install dependencies
       run: cd TelegramBotApi && dotnet restore
     - name: Build
