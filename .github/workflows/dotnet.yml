@@ -6,9 +6,6 @@ on:
   pull_request:
     branches: [ "main" ]
 
-env:
-  OPENSSL_CONF: ./ssl.cnf
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -26,4 +23,4 @@ jobs:
     - name: Build
       run: cd TelegramBotApi && dotnet build --configuration Release --no-restore
     - name: Test
-      run: cd TelegramBotApi && dotnet test --no-restore --verbosity normal
+      run: sudo export OPENSSL_CONF=./ssl.cnf && cd TelegramBotApi && dotnet test --no-restore --verbosity normal
