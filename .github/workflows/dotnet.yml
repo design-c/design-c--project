@@ -5,6 +5,9 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+env:
+  OPENSSL_CONF: ./ssl.cnf
+
 
 jobs:
   build:
