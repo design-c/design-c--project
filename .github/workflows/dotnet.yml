@@ -26,4 +26,4 @@ jobs:
     - name: Build
       run: cd TelegramBotApi && dotnet build --configuration Release --no-restore
     - name: Test
-      run: export OPENSSL_CONF=./ssl.cnf && cd TelegramBotApi && dotnet test --no-restore --verbosity normal
+      run: cd TelegramBotApi && dotnet test --no-restore --verbosity normal
