@@ -17,7 +17,7 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Cert
-      run: apt-get update && apt-get install -y ca-certificates --no-install-recommends && rm -rf /var/lib/apt/lists/*
+      run: sudo apt-get update && sudo apt-get install -y ca-certificates --no-install-recommends && sudo rm -rf /var/lib/apt/lists/*
     - name: Install dependencies
       run: cd TelegramBotApi && dotnet restore
     - name: Build
