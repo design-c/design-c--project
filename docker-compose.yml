@@ -42,3 +42,9 @@ services:
       context: ./TelegramBot
     depends_on:
       - api
+  api-test:
+    restart: always
+    build:
+      context: ./TelegramBotApi
+      dockerfile: test.Dockerfile
+    
