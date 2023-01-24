@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [ "main" ]
 env:
-  OPENSSL_CONF: /etc/ssl/ssl.cnf
+  OPENSSL_CONF: /etc/ssl/sert.cnf
 
 
 jobs:
@@ -20,7 +20,7 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Sert
-      run: sudo echo -e "openssl_conf = openssl_init\n[openssl_init]\nssl_conf = ssl_sect\n[ssl_sect]\nsystem_default = system_default_sect\n[system_default_sect]\nOptions = UnsafeLegacyRenegotiation" > /etc/ssl/ssl.cnf
+      run: sudo echo -e "openssl_conf = openssl_init\n[openssl_init]\nssl_conf = ssl_sect\n[ssl_sect]\nsystem_default = system_default_sect\n[system_default_sect]\nOptions = UnsafeLegacyRenegotiation" >> /etc/ssl/sert.cnf
     - name: Install dependencies
       run: cd TelegramBotApi && dotnet restore
     - name: Build
