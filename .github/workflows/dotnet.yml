@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [ "main" ]
 env:
-  OPENSSL_CONF: /etc/ssl/sert.cnf
+  OPENSSL_CONF: ${{ github.workspace }}/ssl.cnf
 
 
 jobs:
@@ -20,9 +20,7 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Sert
-      run: echo "${{ secrets.SSL_CERT }}" > ./ssl.cnf
-    - name: add env
-      run: echo "::set-env name=OPENSSL_CONF::./ssl.cnf"
+      run: echo ${{ secrets.SSL_CERT }} > ${{ github.workspace }}/ssl.cnf
     - name: Install dependencies
       run: cd TelegramBotApi && dotnet restore
     - name: Build
