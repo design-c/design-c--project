@@ -1,5 +1,3 @@
-using System.Net;
-using System.Security.Authentication;
 using Dal.Contracts.Interfaces;
 using Dal.Contracts.Models;
 using FluentAssertions;
@@ -148,14 +146,16 @@ public class AuthServiceTests
         return userRepository;
     }
 
-    private AuthService GetAuthService(IUserRepository userTestRepository) => new(
-        new AuthJwtTestOptions(authJwtTestSettings),
-        new AuthUrfuTestOptions(authUrfuTestSettings),
-        userTestRepository,
-        new HttpClient(new HttpClientHandler()
-        {
-            SslProtocols = SslProtocols.Tls12 | SslProtocols.Tls11 | SslProtocols.Tls,
-            ServerCertificateCustomValidationCallback = (httpRequestMessage, cert, cetChain, policyErrors) => true
-        }) 
-    );
+    private AuthService GetAuthService(IUserRepository userTestRepository)
+    {
+        var clientHandler = new HttpClientHandler();
+        clientHandler.ServerCertificateCustomValidationCallback = (_, _, _, _) => true;
+        
+        return new AuthService(
+            new AuthJwtTestOptions(authJwtTestSettings),
+            new AuthUrfuTestOptions(authUrfuTestSettings),
+            userTestRepository,
+            new HttpClient(clientHandler)
+        );
+    }
 }

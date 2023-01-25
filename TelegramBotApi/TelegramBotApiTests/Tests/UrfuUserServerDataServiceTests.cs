@@ -79,7 +79,9 @@ public class UrfuUserServerDataServiceTests
             Password = authLoginTestSettings.ValidLoginData.Password,
             UserKey = UserKey
         });
-        var httpClient = new HttpClient();
+        var clientHandler = new HttpClientHandler();
+        clientHandler.ServerCertificateCustomValidationCallback = (_, _, _, _) => true;
+        var httpClient = new HttpClient(clientHandler);
         var authService = new AuthService(
             new AuthJwtTestOptions(authJwtTestSettings),
             new AuthUrfuTestOptions(authUrfuTestSettings),
