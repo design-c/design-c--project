@@ -76,6 +76,7 @@ public class UrfuUserServerDataService : IUrfuUserServerDataService
     {
         var requestMessage = new HttpRequestMessage(HttpMethod.Get, uri);
         var httpResponseMessage = await httpClient.SendAsync(requestMessage).ConfigureAwait(false);
+        httpResponseMessage.EnsureSuccessStatusCode();
         var htmlWithUserDataAsString = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
 
         return htmlParser.ParseDocument(htmlWithUserDataAsString);
