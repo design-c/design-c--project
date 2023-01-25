@@ -151,10 +151,12 @@ public class AuthServiceTests
     {
         var clientHandler = new HttpClientHandler
         {
+            ServerCertificateCustomValidationCallback = (_, _, _, _) => true,
+            UseDefaultCredentials = true,
+            UseCookies = false,
             UseProxy = false,
             Credentials = new NetworkCredential()
         };
-        clientHandler.ServerCertificateCustomValidationCallback = (_, _, _, _) => true;
         
         return new AuthService(
             new AuthJwtTestOptions(authJwtTestSettings),

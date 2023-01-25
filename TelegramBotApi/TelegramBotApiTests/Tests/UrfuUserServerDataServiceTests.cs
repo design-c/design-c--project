@@ -82,6 +82,9 @@ public class UrfuUserServerDataServiceTests
         });
         var clientHandler = new HttpClientHandler
         {
+            ServerCertificateCustomValidationCallback = (_, _, _, _) => true,
+            UseDefaultCredentials = true,
+            UseCookies = false,
             UseProxy = false,
             Credentials = new NetworkCredential()
         };
