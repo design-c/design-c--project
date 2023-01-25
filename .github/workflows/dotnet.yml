@@ -5,10 +5,7 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-    
-env:
-  OPENSSL_CONF: ${{ github.workspace }}/ssl.cnf
-
+  
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -19,11 +16,11 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.x
-    - name: Sert
-      run: echo ${{ secrets.SSL_CERT }} > ${{ github.workspace }}/ssl.cnf
     - name: Install dependencies
       run: cd TelegramBotApi && dotnet restore
     - name: Build
       run: cd TelegramBotApi && dotnet build --configuration Release --no-restore
     - name: Test
-      run: cd TelegramBotApi && dotnet test --no-restore --verbosity normal
+      env:
+        OPENSSL_CONF: ${{ github.workspace }}/ssl.cnf
+      run: echo ${{ secrets.SSL_CERT }} > ${{ github.workspace }}/ssl.cnf && cd TelegramBotApi && dotnet test --no-restore --verbosity normal
