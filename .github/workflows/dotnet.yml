@@ -19,8 +19,6 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.x
-    - name: check
-      run: echo ${{ secrets.SSL_CERT }}
     - name: Sert
       run: echo ${{ secrets.SSL_CERT }} > ${{ github.workspace }}/ssl.cnf
     - name: Install dependencies
