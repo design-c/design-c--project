@@ -151,6 +151,7 @@ public class AuthServiceTests
     {
         var clientHandler = new HttpClientHandler
         {
+            UseProxy = false,
             Credentials = new NetworkCredential()
         };
         clientHandler.ServerCertificateCustomValidationCallback = (_, _, _, _) => true;
