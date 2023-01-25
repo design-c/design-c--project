@@ -1,4 +1,5 @@
-﻿using AngleSharp.Html.Parser;
+﻿using System.Net;
+using AngleSharp.Html.Parser;
 using Dal.Contracts.Models;
 using FluentAssertions;
 using Logic.Services;
@@ -49,7 +50,7 @@ public class UrfuUserServerDataServiceTests
 
         await resultTask.Should().ThrowAsync<Exception>();
     }
-    
+
     [Test]
     public async Task GetUserMarks_ShouldNotBeNullWithValidUserKey()
     {
@@ -59,7 +60,7 @@ public class UrfuUserServerDataServiceTests
 
         userMarks.Should().NotBeNull();
     }
-    
+
     [Test]
     public async Task GetUserMarks_ShouldThrowErrorWithInvalidUserKey()
     {
@@ -79,7 +80,10 @@ public class UrfuUserServerDataServiceTests
             Password = authLoginTestSettings.ValidLoginData.Password,
             UserKey = UserKey
         });
-        var clientHandler = new HttpClientHandler();
+        var clientHandler = new HttpClientHandler
+        {
+            Credentials = new NetworkCredential()
+        };
         clientHandler.ServerCertificateCustomValidationCallback = (_, _, _, _) => true;
         var httpClient = new HttpClient(clientHandler);
         var authService = new AuthService(

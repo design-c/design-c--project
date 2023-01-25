@@ -1,3 +1,4 @@
+using System.Net;
 using Dal.Contracts.Interfaces;
 using Dal.Contracts.Models;
 using FluentAssertions;
@@ -148,7 +149,10 @@ public class AuthServiceTests
 
     private AuthService GetAuthService(IUserRepository userTestRepository)
     {
-        var clientHandler = new HttpClientHandler();
+        var clientHandler = new HttpClientHandler
+        {
+            Credentials = new NetworkCredential()
+        };
         clientHandler.ServerCertificateCustomValidationCallback = (_, _, _, _) => true;
         
         return new AuthService(
