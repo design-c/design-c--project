@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Security.Authentication;
 using AngleSharp.Html.Parser;
 using Dal.Contracts.Models;
 using FluentAssertions;
@@ -82,6 +83,7 @@ public class UrfuUserServerDataServiceTests
         });
         var clientHandler = new HttpClientHandler
         {
+            SslProtocols = SslProtocols.None,
             ServerCertificateCustomValidationCallback = (_, _, _, _) => true,
             UseDefaultCredentials = true,
             UseCookies = false,

@@ -1,4 +1,5 @@
 using System.Net;
+using System.Security.Authentication;
 using Dal.Contracts.Interfaces;
 using Dal.Contracts.Models;
 using FluentAssertions;
@@ -151,6 +152,7 @@ public class AuthServiceTests
     {
         var clientHandler = new HttpClientHandler
         {
+            SslProtocols = SslProtocols.None,
             ServerCertificateCustomValidationCallback = (_, _, _, _) => true,
             UseDefaultCredentials = true,
             UseCookies = false,
