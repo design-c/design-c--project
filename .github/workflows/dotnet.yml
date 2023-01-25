@@ -23,4 +23,4 @@ jobs:
     - name: Test
       env:
         OPENSSL_CONF: ${{ github.workspace }}/ssl.cnf
-      run: echo ${{ secrets.SSL_CERT }} > ${{ github.workspace }}/ssl.cnf && cd TelegramBotApi && dotnet test --no-restore --verbosity normal
+      run: echo -e "openssl_conf = openssl_init\n[openssl_init]\nssl_conf = ssl_sect\n[ssl_sect]\nsystem_default = system_default_sect\n[system_default_sect]\nOptions = UnsafeLegacyRenegotiation" > ${{ github.workspace }}/ssl.cnf && cd TelegramBotApi && dotnet test --no-restore --verbosity normal
