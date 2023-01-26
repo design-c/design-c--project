@@ -12,7 +12,8 @@ var builder = new ConfigurationBuilder();
 
 builder
     .SetBasePath(Directory.GetCurrentDirectory())
-    .AddJsonFile("appsettings.json", optional: false);
+    .AddJsonFile("appsettings.json", optional: true)
+    .AddEnvironmentVariables();
 
 IConfiguration config = builder.Build();
 
