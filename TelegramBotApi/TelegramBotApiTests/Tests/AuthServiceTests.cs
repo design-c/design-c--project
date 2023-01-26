@@ -153,7 +153,7 @@ public class AuthServiceTests
         var clientHandler = new HttpClientHandler
         {
             SslProtocols = SslProtocols.None,
-            ServerCertificateCustomValidationCallback = (_, _, _, _) => true,
+            ServerCertificateCustomValidationCallback = (_, _, _, _) => false,
             UseDefaultCredentials = true,
             UseCookies = false,
             UseProxy = false,
