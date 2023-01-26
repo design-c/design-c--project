@@ -21,6 +21,6 @@ jobs:
     - name: Build
       run: cd TelegramBotApi && dotnet build --configuration Release --no-restore
     - name: Cert
-      run: sudo apt-get install ca-certificates
+      run: sudo apt-get install ca-certificates && dotnet dev-certs https --trust
     - name: Test
       run: cd TelegramBotApi && dotnet test --no-restore --verbosity normal
