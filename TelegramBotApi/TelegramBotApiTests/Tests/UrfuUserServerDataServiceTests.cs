@@ -84,13 +84,12 @@ public class UrfuUserServerDataServiceTests
         var clientHandler = new HttpClientHandler
         {
             SslProtocols = SslProtocols.None,
-            ServerCertificateCustomValidationCallback = (_, _, _, _) => true,
+            ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator,
             UseDefaultCredentials = true,
             UseCookies = false,
             UseProxy = false,
             Credentials = new NetworkCredential()
         };
-        clientHandler.ServerCertificateCustomValidationCallback = (_, _, _, _) => true;
         var httpClient = new HttpClient(clientHandler);
         var authService = new AuthService(
             new AuthJwtTestOptions(authJwtTestSettings),
