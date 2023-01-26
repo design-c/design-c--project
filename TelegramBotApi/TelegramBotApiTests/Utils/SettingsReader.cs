@@ -30,5 +30,6 @@ public static class SettingsReader
     private static IConfigurationRoot GetConfig() => new ConfigurationBuilder()
         .SetBasePath(Directory.GetCurrentDirectory())
         .AddJsonFile("appsettings.test.json", optional: true)
+        .AddEnvironmentVariables()
         .Build();
 }
