@@ -83,6 +83,7 @@ public class UrfuUserServerDataServiceTests
         });
         var clientHandler = new HttpClientHandler
         {
+            SslProtocols = SslProtocols.Tls12,
             CheckCertificateRevocationList = false,
             ServerCertificateCustomValidationCallback = (_, _, _, _) => true,
         };
