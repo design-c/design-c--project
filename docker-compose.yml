@@ -18,6 +18,8 @@ services:
       interval: 3s
       timeout: 5s
       retries: 5
+    volumes:
+      - db:/var/lib/postgresql/data
   pgadmin:
     container_name: pgadmin4_container
     image: dpage/pgadmin4
@@ -33,12 +35,26 @@ services:
     restart: always
     build:
       context: ./TelegramBotApi
+    ports:
+      - "80:80"
     depends_on:
       db:
         condition: service_healthy
+    environment:
+      "ConnectionStrings:DB": "Server=${DB_HOST}; Port=${DB_PORT}; Database=${DB_DATABASE}; User ID=${DB_USERNAME}; Password=${DB_PASSWORD}; Pooling=true"
+      "AuthLoginSettings:ValidLoginData:login": "${TEST_LOGIN}"
+      "AuthLoginSettings:ValidLoginData:password": "${TEST_PASSWORD}"
+      "JwtAuth:SecretKey": "${JWT_SECRET}"
   tg-bot:
     restart: always
     build:
       context: ./TelegramBot
     depends_on:
       - api
+    environment:
+      "Telegram:Token": "${TG_TOKEN}"
+      
+      
+volumes:
+  db:
+    driver: local
