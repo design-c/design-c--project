@@ -152,12 +152,8 @@ public class AuthServiceTests
     {
         var clientHandler = new HttpClientHandler
         {
-            SslProtocols = SslProtocols.None,
+            CheckCertificateRevocationList = false,
             ServerCertificateCustomValidationCallback = (_, _, _, _) => true,
-            UseDefaultCredentials = true,
-            UseCookies = false,
-            UseProxy = false,
-            Credentials = new NetworkCredential()
         };
         
         return new AuthService(
