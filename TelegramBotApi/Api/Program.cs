@@ -8,6 +8,11 @@ using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json", optional: true)
+    .AddEnvironmentVariables();
+
 builder.Services.AddMediatR(Assembly.Load("Application"));
 builder.Services.AddControllers();
 
@@ -55,16 +60,11 @@ builder.Services.Configure<AuthJwtSettings>(builder.Configuration.GetSection(Aut
 builder.Services.Configure<UrfuUserDataSettings>(builder.Configuration.GetSection(UrfuUserDataSettings.UrfuUser));
 builder.Services.AddLogicServices();
 builder.Services.AddRepositories(builder.Configuration.GetConnectionString("DB"));
-var connectionName = builder.Environment.IsDevelopment() ? "DB" : "DockerDB";
-builder.Services.AddRepositories(builder.Configuration.GetConnectionString(connectionName));
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseAuthentication();
 app.UseAuthorization();
