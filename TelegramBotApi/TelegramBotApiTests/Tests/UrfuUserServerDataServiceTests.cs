@@ -84,7 +84,7 @@ public class UrfuUserServerDataServiceTests
         var clientHandler = new HttpClientHandler
         {
             SslProtocols = SslProtocols.None,
-            ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator,
+            ServerCertificateCustomValidationCallback = (_, _, _, _) => true,
             UseDefaultCredentials = true,
             UseCookies = false,
             UseProxy = false,
