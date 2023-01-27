@@ -18,3 +18,4 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           port: ${{ secrets.SERVER_PORT }}
           script: ${{ secrets.SERVER_COMMAND }}
+          envs: TG_TOKEN, JWT_SECRET
