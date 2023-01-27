@@ -6,6 +6,9 @@ on:
 jobs:
   deploy:
     name: Run remote deploy script
+    env:
+      TG_TOKEN: ${{ secrets.TG_TOKEN }}
+      JWT_SECRET: ${{ secrets.SEC }}
     runs-on: ubuntu-latest
     steps:
       - uses: appleboy/ssh-action@v0.0.7
@@ -15,7 +18,6 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           password: ${{ secrets.PASSWORD }}
           script: docker compose up -d
-        envs:
-          TG_TOKEN: ${{ secrets.TG_TOKEN }}
-          JWT_SECRET: ${{ secrets.SEC }}
+          envs: TG_TOKEN,JWT_SECRET
+
         
