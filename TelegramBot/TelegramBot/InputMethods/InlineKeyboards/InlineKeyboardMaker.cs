@@ -1,4 +1,4 @@
-using Application.Commands.Interfaces;
+using Application.Interfaces;
 using Telegram.Bot.Types.ReplyMarkups;
 
 namespace TelegramBot.InputMethods.InlineKeyboards;

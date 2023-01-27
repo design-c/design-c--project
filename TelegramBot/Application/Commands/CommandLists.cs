@@ -1,4 +1,4 @@
-using Application.Commands.Interfaces;
+using Application.Interfaces;
 using Infrastructure.Utils;
 
 namespace Application.Commands;
