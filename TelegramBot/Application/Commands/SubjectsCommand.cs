@@ -1,5 +1,5 @@
 using System.Text;
-using Application.Commands.Interfaces;
+using Application.Interfaces;
 using Domain;
 using Infrastructure.Repositories;
 

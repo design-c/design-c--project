@@ -71,6 +71,52 @@
 
 ![alt text](Images/TelegramBotStructure.png)
 
+## Реализация паттернов telegram bot:
++ #### Паттерн "Команда"
+
+Интерфейс ICommand
+
+![alt text](Images/TelegramBotICommand.png)
+
+Реализация интерфейса
+![alt text](Images/TelegramBotCommandRealisation.png)
+
+Все реализации
+
+![alt text](Images/TelegramBotCommandFiles.png)
+
+Списки команд
+![alt text](Images/TelegramBotCommandLists.png)
+
+Получение команды из текста
+![alt text](Images/TelegramBotCommandParser.png)
+
+Использование команды
+![alt text](Images/TelegramBotCommandUsage.png)
+
++ #### Паттерн "Машина состояний"
+Машина состояний
+![alt text](Images/TelegramBotStateMachine.png)
+
+Абстрактный класс состояния бота
+![alt text](Images/TelegramBotStateClass.png)
+
+Каждое состояние разное
+![alt text](Images/TelegramBotStateMain.png)
+
+![alt text](Images/TelegramBotStateLogin.png)
+
+![alt text](Images/TelegramBotStateStart1.png)
+
+![alt text](Images/TelegramBotStateStart2.png)
+
+Словарь машин состояний для каждого пользователя
+![alt text](Images/TelegramBotStateMachines.png)
+
+Реализация машины состояний
+![alt text](Images/TelegramBotStateRealisation1.png)
+![alt text](Images/TelegramBotStateRealisation2.png)
+
 ## Точки расширение telegram bot:
 
 + #### Добавление новых команд бота
