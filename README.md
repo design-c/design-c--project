@@ -75,6 +75,7 @@
 + #### Паттерн "Команда"
 
 Интерфейс ICommand
+
 ![alt text](Images/TelegramBotICommand.png)
 
 Реализация интерфейса
