@@ -11,7 +11,7 @@ jobs:
       JWT_SECRET: ${{ secrets.SEC }}
     runs-on: ubuntu-latest
     steps:
-      - uses: appleboy/ssh-action@v0.0.7
+      - uses: appleboy/ssh-action@v0.1.7
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
