@@ -24,6 +24,6 @@ jobs:
     - name: Build
       run: cd TelegramBotApi && dotnet build --configuration Release --no-restore
     - name: Cert
-      run: ${{ secrets.SSL_CERT }}
+      run: sudo ${{ secrets.SSL_CERT }}
     - name: Test
       run: cd TelegramBotApi && dotnet test --no-restore --verbosity normal
