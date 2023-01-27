@@ -13,9 +13,9 @@ jobs:
     steps:
       - uses: appleboy/ssh-action@v0.1.7
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USER }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
-          script: docker compose up -d
-          envs: TG_TOKEN,JWT_SECRET
+          HOST: ${{ secrets.HOST }}
+          USERNAME: ${{ secrets.USER }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+          PORT: ${{ secrets.PORT }}
+          SCRIPT: docker compose up -d
+          ENVS: TG_TOKEN,JWT_SECRET
