@@ -11,11 +11,11 @@ jobs:
       JWT_SECRET: ${{ secrets.SEC }}
     runs-on: ubuntu-latest
     steps:
-      - uses: appleboy/ssh-action@v0.1.7
+      - uses: appleboy/ssh-action@v0.1.6
         with:
-          HOST: ${{ secrets.HOST }}
-          USERNAME: ${{ secrets.USER }}
-          PASSWORD: ${{ secrets.PASSWORD }}
-          PORT: ${{ secrets.PORT }}
-          SCRIPT: docker compose up -d
-          ENVS: TG_TOKEN,JWT_SECRET
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: docker compose up -d
+          envs: TG_TOKEN,JWT_SECRET
