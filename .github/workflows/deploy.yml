@@ -1,0 +1,21 @@
+name: Deploy
+on: 
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    name: Run remote deploy script
+    runs-on: ubuntu-latest
+    steps:
+      - uses: appleboy/ssh-action@v0.0.7
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          port: ${{ secrets.SSH_PORT }}
+          password: ${{ secrets.PASSWORD }}
+          script: docker compose up -d
+        envs:
+          TG_TOKEN: ${{ secrets.TG_TOKEN }}
+          JWT_SECRET: ${{ secrets.SEC }}
+        
