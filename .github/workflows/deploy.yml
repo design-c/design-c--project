@@ -16,6 +16,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
           script: docker compose up -d
           envs: TG_TOKEN,JWT_SECRET
 
