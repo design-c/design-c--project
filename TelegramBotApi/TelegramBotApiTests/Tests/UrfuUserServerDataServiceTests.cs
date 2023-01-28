@@ -33,45 +33,41 @@ public class UrfuUserServerDataServiceTests
     [Test]
     public async Task GetUserInfo_ShouldNotBeNullWithValidUserKey()
     {
-        true.Should().BeTrue();
-        // var urfuUserServerDataService = await GetUrfuUserDataService();
-        //
-        // var userInfo = await urfuUserServerDataService.GetUserInfo(UserKey);
-        //
-        // userInfo.Should().NotBeNull();
+        var urfuUserServerDataService = await GetUrfuUserDataService();
+
+        var userInfo = await urfuUserServerDataService.GetUserInfo(UserKey);
+
+        userInfo.Should().NotBeNull();
     }
 
     [Test]
     public async Task GetUserInfo_ShouldThrowErrorWithInvalidUserKey()
     {
-        true.Should().BeTrue();
-        // var urfuUserServerDataService = await GetUrfuUserDataService();
-        //
-        // var resultTask = async () => await urfuUserServerDataService.GetUserInfo(InvalidUserKey);
-        //
-        // await resultTask.Should().ThrowAsync<Exception>();
+        var urfuUserServerDataService = await GetUrfuUserDataService();
+
+        var resultTask = async () => await urfuUserServerDataService.GetUserInfo(InvalidUserKey);
+
+        await resultTask.Should().ThrowAsync<Exception>();
     }
     
     [Test]
     public async Task GetUserMarks_ShouldNotBeNullWithValidUserKey()
     {
-        true.Should().BeTrue();
-        // var urfuUserServerDataService = await GetUrfuUserDataService();
-        //
-        // var userMarks = await urfuUserServerDataService.GetUserMarks(UserKey);
-        //
-        // userMarks.Should().NotBeNull();
+        var urfuUserServerDataService = await GetUrfuUserDataService();
+
+        var userMarks = await urfuUserServerDataService.GetUserMarks(UserKey);
+
+        userMarks.Should().NotBeNull();
     }
     
     [Test]
     public async Task GetUserMarks_ShouldThrowErrorWithInvalidUserKey()
     {
-        true.Should().BeTrue();
-        // var urfuUserServerDataService = await GetUrfuUserDataService();
-        //
-        // var resultTask = async () => await urfuUserServerDataService.GetUserMarks(InvalidUserKey);
-        //
-        // await resultTask.Should().ThrowAsync<Exception>();
+        var urfuUserServerDataService = await GetUrfuUserDataService();
+
+        var resultTask = async () => await urfuUserServerDataService.GetUserMarks(InvalidUserKey);
+
+        await resultTask.Should().ThrowAsync<Exception>();
     }
 
     private async Task<UrfuUserServerDataService> GetUrfuUserDataService()
