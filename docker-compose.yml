@@ -54,7 +54,6 @@ services:
     environment:
       "Telegram:Token": "${TG_TOKEN}"
       
-      
 volumes:
   db:
     driver: local
