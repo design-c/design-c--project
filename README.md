@@ -23,25 +23,25 @@
 
 ## Структура Api:
 
-![alt text](Images/ApiStructure.png)
+![](Images/ApiStructure.png)
 
 ## Тесты в Api:
 
-![alt text](Images/ApiTests.png)
+![](Images/ApiTests.png)
 
 ## Сценарий использования Api:
 
-![alt text](Images/Api.png)
+![](Images/Api.png)
 
-![alt text](Images/AuthRequest.png)
+![](Images/AuthRequest.png)
 
-![alt text](Images/AuthResponse.png)
+![](Images/AuthResponse.png)
 
-![alt text](Images/BearerAuth.png)
+![](Images/BearerAuth.png)
 
-![alt text](Images/UserData.png)
+![](Images/UserData.png)
 
-![alt text](Images/UrfuMarks.png)
+![](Images/UrfuMarks.png)
 
 ## Точки расширение Api:
 
@@ -70,53 +70,53 @@
 
 ## Структура telegram bot:
 
-![alt text](Images/TelegramBotStructure.png)
+![](Images/TelegramBotStructure.png)
 
 ## Реализация паттернов telegram bot:
 + #### Паттерн "Команда"
 
 Интерфейс ICommand
 
-![alt text](Images/TelegramBotICommand.png)
+![](Images/TelegramBotICommand.png)
 
 Реализация интерфейса
-![alt text](Images/TelegramBotCommandRealisation.png)
+![](Images/TelegramBotCommandRealisation.png)
 
 Все реализации
 
-![alt text](Images/TelegramBotCommandFiles.png)
+![](Images/TelegramBotCommandFiles.png)
 
 Списки команд
-![alt text](Images/TelegramBotCommandLists.png)
+![](Images/TelegramBotCommandLists.png)
 
 Получение команды из текста
-![alt text](Images/TelegramBotCommandParser.png)
+![](Images/TelegramBotCommandParser.png)
 
 Использование команды
-![alt text](Images/TelegramBotCommandUsage.png)
+![](Images/TelegramBotCommandUsage.png)
 
 + #### Паттерн "Машина состояний"
 Машина состояний
-![alt text](Images/TelegramBotStateMachine.png)
+![](Images/TelegramBotStateMachine.png)
 
 Абстрактный класс состояния бота
-![alt text](Images/TelegramBotStateClass.png)
+![](Images/TelegramBotStateClass.png)
 
 Каждое состояние разное
-![alt text](Images/TelegramBotStateMain.png)
+![](Images/TelegramBotStateMain.png)
 
-![alt text](Images/TelegramBotStateLogin.png)
+![](Images/TelegramBotStateLogin.png)
 
-![alt text](Images/TelegramBotStateStart1.png)
+![](Images/TelegramBotStateStart1.png)
 
-![alt text](Images/TelegramBotStateStart2.png)
+![](Images/TelegramBotStateStart2.png)
 
 Словарь машин состояний для каждого пользователя
-![alt text](Images/TelegramBotStateMachines.png)
+![](Images/TelegramBotStateMachines.png)
 
 Реализация машины состояний
-![alt text](Images/TelegramBotStateRealisation1.png)
-![alt text](Images/TelegramBotStateRealisation2.png)
+![](Images/TelegramBotStateRealisation1.png)
+![](Images/TelegramBotStateRealisation2.png)
 
 ## Точки расширение telegram bot:
 
@@ -125,13 +125,6 @@
 + #### Добавление новых клавиатур и других методов ввода команд
 + #### Изменение формата вывода комманд
 
-
-## CI\CD:
-### CI - Continuous Integration
-При создании мр на ветку main срабатывает триггер github action, после чего проект собирается на виртаульной машине и прогоняются все тесты.
-(* файл конфигурации ".github/workflows/dotnet.yml")
-
-
 ## Что хотели бы добавить в telegram bot:
 
 + #### Соеденить api с ботом
@@ -139,3 +132,18 @@
 + #### Добавить Redis
 + #### Добавить тесты
 
+## CI\CD:
+### CI - Continuous Integration
+При создании мр на ветку main срабатывает триггер github action, после чего проект собирается на виртаульной машине и прогоняются все тесты.
+![](Images/testsOnMR.jpg)
+(*файл конфигурации ".github/workflows/dotnet.yml")
+
+### CD - Continuous Delivery\ Continuous Deployment
+При пуше изменений в ветку main срабатывает триггер github action, после чего посылается команда на сервер, где происходит выполняются следующие шаги:
++ #### Обновление данных из репозитория
++ #### Получение чувствительных данных для переменных окружения из Github Secrets
++ #### Запуск приложения в docker
++ #### Установка миграций на бд
+(* В случае ошибки при сборке будет использован предыдущий билд, а статус операции во вкладке "actions" будет failed)
+![](Images/cd.jpg)
+(*файл конфигурации ".github/workflows/deploy.yml")
